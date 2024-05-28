@@ -1,0 +1,941 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBLPFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Atributo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Item" Type="int" Nullable="false" />
+          <Property Name="ID_Propiedad" Type="int" Nullable="false" />
+          <Property Name="Medida" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Color" Type="nchar" MaxLength="10" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estacion_Trabajo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Estado_Trabajo" Type="int" Nullable="false" />
+          <Property Name="Modo_ID_Figura" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Estacion" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estado_Estacion_Trabajo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Disponible" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Evento">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Evento" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado_Inicial" Type="int" Nullable="false" />
+          <Property Name="Estado_Final" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Figura">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Figura" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Numero_Atributos" Type="int" Nullable="false" />
+          <Property Name="Formula" Type="xml" Nullable="false" />
+          <Property Name="Tiempo_Promedio" Type="time" Precision="7" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Historico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Item" Type="int" Nullable="false" />
+          <Property Name="ID_Evento" Type="int" Nullable="false" />
+          <Property Name="Tiempo" Type="time" Precision="7" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Historico_Estacion_Trabajo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Estacion_Trabajo" Type="int" Nullable="false" />
+          <Property Name="ID_Estado_Estacion_Trabajo" Type="int" Nullable="false" />
+          <Property Name="ID_Modo" Type="int" Nullable="false" />
+          <Property Name="Tiempo_Estacion_Trabajo" Type="time" Precision="7" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Figura" Type="int" Nullable="false" />
+          <Property Name="ID_Color" Type="int" Nullable="false" />
+          <Property Name="ID_Estado" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Propiedad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Figura" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Origin_Date" Type="datetime" Nullable="false" />
+          <Property Name="Edit_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Atributo_Propiedad">
+          <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="1" />
+          <End Role="Atributo" Type="Self.Atributo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propiedad">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Atributo">
+              <PropertyRef Name="ID_Propiedad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estacion_Trabajo_Estado_Estacion_Trabajo">
+          <End Role="Estado_Estacion_Trabajo" Type="Self.Estado_Estacion_Trabajo" Multiplicity="1" />
+          <End Role="Estacion_Trabajo" Type="Self.Estacion_Trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado_Estacion_Trabajo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Estacion_Trabajo">
+              <PropertyRef Name="ID_Estado_Trabajo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estacion_Trabajo_Figura">
+          <End Role="Figura" Type="Self.Figura" Multiplicity="1" />
+          <End Role="Estacion_Trabajo" Type="Self.Estacion_Trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Figura">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Estacion_Trabajo">
+              <PropertyRef Name="Modo_ID_Figura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Eventos_Estados">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="Estado_Inicial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historico_Estacion_Trabajo_Estacion_Trabajo">
+          <End Role="Estacion_Trabajo" Type="Self.Estacion_Trabajo" Multiplicity="1" />
+          <End Role="Historico_Estacion_Trabajo" Type="Self.Historico_Estacion_Trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estacion_Trabajo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Historico_Estacion_Trabajo">
+              <PropertyRef Name="ID_Estacion_Trabajo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historico_Estacion_Trabajo_Estado_Estacion_Trabajo">
+          <End Role="Estado_Estacion_Trabajo" Type="Self.Estado_Estacion_Trabajo" Multiplicity="1" />
+          <End Role="Historico_Estacion_Trabajo" Type="Self.Historico_Estacion_Trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado_Estacion_Trabajo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Historico_Estacion_Trabajo">
+              <PropertyRef Name="ID_Estado_Estacion_Trabajo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historico_Estacion_Trabajo_Figura">
+          <End Role="Figura" Type="Self.Figura" Multiplicity="1" />
+          <End Role="Historico_Estacion_Trabajo" Type="Self.Historico_Estacion_Trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Figura">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Historico_Estacion_Trabajo">
+              <PropertyRef Name="ID_Modo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historicos_Eventos">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+          <End Role="Historico" Type="Self.Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Historico">
+              <PropertyRef Name="ID_Evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historicos_Items">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Historico" Type="Self.Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Historico">
+              <PropertyRef Name="ID_Item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Colores">
+          <End Role="Color" Type="Self.Color" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ID_Color" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Estados">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ID_Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Figuras">
+          <End Role="Figura" Type="Self.Figura" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Figura">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ID_Figura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propiedad_Figura">
+          <End Role="Figura" Type="Self.Figura" Multiplicity="1" />
+          <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Figura">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Propiedad">
+              <PropertyRef Name="ID_Figura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propiedades_Items">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Atributo" Type="Self.Atributo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Atributo">
+              <PropertyRef Name="ID_Item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBLPFModelStoreContainer">
+          <EntitySet Name="Atributo" EntityType="Self.Atributo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estacion_Trabajo" EntityType="Self.Estacion_Trabajo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estado_Estacion_Trabajo" EntityType="Self.Estado_Estacion_Trabajo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evento" EntityType="Self.Evento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Figura" EntityType="Self.Figura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Historico" EntityType="Self.Historico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Historico_Estacion_Trabajo" EntityType="Self.Historico_Estacion_Trabajo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Propiedad" EntityType="Self.Propiedad" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Atributo_Propiedad" Association="Self.FK_Atributo_Propiedad">
+            <End Role="Propiedad" EntitySet="Propiedad" />
+            <End Role="Atributo" EntitySet="Atributo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estacion_Trabajo_Estado_Estacion_Trabajo" Association="Self.FK_Estacion_Trabajo_Estado_Estacion_Trabajo">
+            <End Role="Estado_Estacion_Trabajo" EntitySet="Estado_Estacion_Trabajo" />
+            <End Role="Estacion_Trabajo" EntitySet="Estacion_Trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estacion_Trabajo_Figura" Association="Self.FK_Estacion_Trabajo_Figura">
+            <End Role="Figura" EntitySet="Figura" />
+            <End Role="Estacion_Trabajo" EntitySet="Estacion_Trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Eventos_Estados" Association="Self.FK_Eventos_Estados">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historico_Estacion_Trabajo_Estacion_Trabajo" Association="Self.FK_Historico_Estacion_Trabajo_Estacion_Trabajo">
+            <End Role="Estacion_Trabajo" EntitySet="Estacion_Trabajo" />
+            <End Role="Historico_Estacion_Trabajo" EntitySet="Historico_Estacion_Trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historico_Estacion_Trabajo_Estado_Estacion_Trabajo" Association="Self.FK_Historico_Estacion_Trabajo_Estado_Estacion_Trabajo">
+            <End Role="Estado_Estacion_Trabajo" EntitySet="Estado_Estacion_Trabajo" />
+            <End Role="Historico_Estacion_Trabajo" EntitySet="Historico_Estacion_Trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historico_Estacion_Trabajo_Figura" Association="Self.FK_Historico_Estacion_Trabajo_Figura">
+            <End Role="Figura" EntitySet="Figura" />
+            <End Role="Historico_Estacion_Trabajo" EntitySet="Historico_Estacion_Trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historicos_Eventos" Association="Self.FK_Historicos_Eventos">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="Historico" EntitySet="Historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historicos_Items" Association="Self.FK_Historicos_Items">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Historico" EntitySet="Historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Colores" Association="Self.FK_Items_Colores">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Estados" Association="Self.FK_Items_Estados">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Figuras" Association="Self.FK_Items_Figuras">
+            <End Role="Figura" EntitySet="Figura" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propiedad_Figura" Association="Self.FK_Propiedad_Figura">
+            <End Role="Figura" EntitySet="Figura" />
+            <End Role="Propiedad" EntitySet="Propiedad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propiedades_Items" Association="Self.FK_Propiedades_Items">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Atributo" EntitySet="Atributo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBLPFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Atributo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Item" Type="Int32" Nullable="false" />
+          <Property Name="ID_Propiedad" Type="Int32" Nullable="false" />
+          <Property Name="Medida" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edit_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Propiedad" Relationship="Self.FK_Atributo_Propiedad" FromRole="Atributo" ToRole="Propiedad" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Propiedades_Items" FromRole="Atributo" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Color1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edit_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Items_Colores" FromRole="Color" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Estacion_Trabajo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID_Estado_Trabajo" Type="Int32" Nullable="false" />
+          <Property Name="Modo_ID_Figura" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edit_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Estado_Estacion_Trabajo" Relationship="Self.FK_Estacion_Trabajo_Estado_Estacion_Trabajo" FromRole="Estacion_Trabajo" ToRole="Estado_Estacion_Trabajo" />
+          <NavigationProperty Name="Figura" Relationship="Self.FK_Estacion_Trabajo_Figura" FromRole="Estacion_Trabajo" ToRole="Figura" />
+          <NavigationProperty Name="Historico_Estacion_Trabajo" Relationship="Self.FK_Historico_Estacion_Trabajo_Estacion_Trabajo" FromRole="Estacion_Trabajo" ToRole="Historico_Estacion_Trabajo" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Estado1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Estacion" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edit_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK_Eventos_Estados" FromRole="Estado" ToRole="Evento" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Items_Estados" FromRole="Estado" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Estado_Estacion_Trabajo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Disponible" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edit_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Estacion_Trabajo" Relationship="Self.FK_Estacion_Trabajo_Estado_Estacion_Trabajo" FromRole="Estado_Estacion_Trabajo" ToRole="Estacion_Trabajo" />
+          <NavigationProperty Name="Historico_Estacion_Trabajo" Relationship="Self.FK_Historico_Estacion_Trabajo_Estado_Estacion_Trabajo" FromRole="Estado_Estacion_Trabajo" ToRole="Historico_Estacion_Trabajo" />
+        </EntityType>
+        <EntityType Name="Evento">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Evento1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Estado_Inicial" Type="Int32" Nullable="false" />
+          <Property Name="Estado_Final" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edit_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Eventos_Estados" FromRole="Evento" ToRole="Estado" />
+          <NavigationProperty Name="Historico" Relationship="Self.FK_Historicos_Eventos" FromRole="Evento" ToRole="Historico" />
+        </EntityType>
+        <EntityType Name="Figura">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Figura1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Numero_Atributos" Type="Int32" Nullable="false" />
+          <Property Name="Formula" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tiempo_Promedio" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edit_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Estacion_Trabajo" Relationship="Self.FK_Estacion_Trabajo_Figura" FromRole="Figura" ToRole="Estacion_Trabajo" />
+          <NavigationProperty Name="Historico_Estacion_Trabajo" Relationship="Self.FK_Historico_Estacion_Trabajo_Figura" FromRole="Figura" ToRole="Historico_Estacion_Trabajo" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Items_Figuras" FromRole="Figura" ToRole="Item" />
+          <NavigationProperty Name="Propiedad" Relationship="Self.FK_Propiedad_Figura" FromRole="Figura" ToRole="Propiedad" />
+        </EntityType>
+        <EntityType Name="Historico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Item" Type="Int32" Nullable="false" />
+          <Property Name="ID_Evento" Type="Int32" Nullable="false" />
+          <Property Name="Tiempo" Type="Time" Precision="7" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="Edit_Date" Type="DateTime" Precision="3" Nullable="false" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK_Historicos_Eventos" FromRole="Historico" ToRole="Evento" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Historicos_Items" FromRole="Historico" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Historico_Estacion_Trabajo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Estacion_Trabajo" Type="Int32" Nullable="false" />
+          <Property Name="ID_Estado_Estacion_Trabajo" Type="Int32" Nullable="false" />
+          <Property Name="ID_Modo" Type="Int32" Nullable="false" />
+          <Property Name="Tiempo_Estacion_Trabajo" Type="Time" Precision="7" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="Edit_Date" Type="DateTime" Precision="3" Nullable="false" />
+          <NavigationProperty Name="Estacion_Trabajo" Relationship="Self.FK_Historico_Estacion_Trabajo_Estacion_Trabajo" FromRole="Historico_Estacion_Trabajo" ToRole="Estacion_Trabajo" />
+          <NavigationProperty Name="Estado_Estacion_Trabajo" Relationship="Self.FK_Historico_Estacion_Trabajo_Estado_Estacion_Trabajo" FromRole="Historico_Estacion_Trabajo" ToRole="Estado_Estacion_Trabajo" />
+          <NavigationProperty Name="Figura" Relationship="Self.FK_Historico_Estacion_Trabajo_Figura" FromRole="Historico_Estacion_Trabajo" ToRole="Figura" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Figura" Type="Int32" Nullable="false" />
+          <Property Name="ID_Color" Type="Int32" Nullable="false" />
+          <Property Name="ID_Estado" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edit_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Atributo" Relationship="Self.FK_Propiedades_Items" FromRole="Item" ToRole="Atributo" />
+          <NavigationProperty Name="Color" Relationship="Self.FK_Items_Colores" FromRole="Item" ToRole="Color" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Items_Estados" FromRole="Item" ToRole="Estado" />
+          <NavigationProperty Name="Figura" Relationship="Self.FK_Items_Figuras" FromRole="Item" ToRole="Figura" />
+          <NavigationProperty Name="Historico" Relationship="Self.FK_Historicos_Items" FromRole="Item" ToRole="Historico" />
+        </EntityType>
+        <EntityType Name="Propiedad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Figura" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Origin_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edit_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Atributo" Relationship="Self.FK_Atributo_Propiedad" FromRole="Propiedad" ToRole="Atributo" />
+          <NavigationProperty Name="Figura" Relationship="Self.FK_Propiedad_Figura" FromRole="Propiedad" ToRole="Figura" />
+        </EntityType>
+        <Association Name="FK_Atributo_Propiedad">
+          <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="1" />
+          <End Role="Atributo" Type="Self.Atributo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propiedad">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Atributo">
+              <PropertyRef Name="ID_Propiedad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propiedades_Items">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Atributo" Type="Self.Atributo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Atributo">
+              <PropertyRef Name="ID_Item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Colores">
+          <End Role="Color" Type="Self.Color" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ID_Color" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estacion_Trabajo_Estado_Estacion_Trabajo">
+          <End Role="Estado_Estacion_Trabajo" Type="Self.Estado_Estacion_Trabajo" Multiplicity="1" />
+          <End Role="Estacion_Trabajo" Type="Self.Estacion_Trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado_Estacion_Trabajo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Estacion_Trabajo">
+              <PropertyRef Name="ID_Estado_Trabajo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estacion_Trabajo_Figura">
+          <End Role="Figura" Type="Self.Figura" Multiplicity="1" />
+          <End Role="Estacion_Trabajo" Type="Self.Estacion_Trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Figura">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Estacion_Trabajo">
+              <PropertyRef Name="Modo_ID_Figura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historico_Estacion_Trabajo_Estacion_Trabajo">
+          <End Role="Estacion_Trabajo" Type="Self.Estacion_Trabajo" Multiplicity="1" />
+          <End Role="Historico_Estacion_Trabajo" Type="Self.Historico_Estacion_Trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estacion_Trabajo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Historico_Estacion_Trabajo">
+              <PropertyRef Name="ID_Estacion_Trabajo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Eventos_Estados">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="Estado_Inicial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Estados">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ID_Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historico_Estacion_Trabajo_Estado_Estacion_Trabajo">
+          <End Role="Estado_Estacion_Trabajo" Type="Self.Estado_Estacion_Trabajo" Multiplicity="1" />
+          <End Role="Historico_Estacion_Trabajo" Type="Self.Historico_Estacion_Trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado_Estacion_Trabajo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Historico_Estacion_Trabajo">
+              <PropertyRef Name="ID_Estado_Estacion_Trabajo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historicos_Eventos">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+          <End Role="Historico" Type="Self.Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Historico">
+              <PropertyRef Name="ID_Evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historico_Estacion_Trabajo_Figura">
+          <End Role="Figura" Type="Self.Figura" Multiplicity="1" />
+          <End Role="Historico_Estacion_Trabajo" Type="Self.Historico_Estacion_Trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Figura">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Historico_Estacion_Trabajo">
+              <PropertyRef Name="ID_Modo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Figuras">
+          <End Role="Figura" Type="Self.Figura" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Figura">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ID_Figura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propiedad_Figura">
+          <End Role="Figura" Type="Self.Figura" Multiplicity="1" />
+          <End Role="Propiedad" Type="Self.Propiedad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Figura">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Propiedad">
+              <PropertyRef Name="ID_Figura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historicos_Items">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Historico" Type="Self.Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Historico">
+              <PropertyRef Name="ID_Item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBLPFEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Atributo" EntityType="Self.Atributo" />
+          <EntitySet Name="Color" EntityType="Self.Color" />
+          <EntitySet Name="Estacion_Trabajo" EntityType="Self.Estacion_Trabajo" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" />
+          <EntitySet Name="Estado_Estacion_Trabajo" EntityType="Self.Estado_Estacion_Trabajo" />
+          <EntitySet Name="Evento" EntityType="Self.Evento" />
+          <EntitySet Name="Figura" EntityType="Self.Figura" />
+          <EntitySet Name="Historico" EntityType="Self.Historico" />
+          <EntitySet Name="Historico_Estacion_Trabajo" EntityType="Self.Historico_Estacion_Trabajo" />
+          <EntitySet Name="Item" EntityType="Self.Item" />
+          <EntitySet Name="Propiedad" EntityType="Self.Propiedad" />
+          <AssociationSet Name="FK_Atributo_Propiedad" Association="Self.FK_Atributo_Propiedad">
+            <End Role="Propiedad" EntitySet="Propiedad" />
+            <End Role="Atributo" EntitySet="Atributo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propiedades_Items" Association="Self.FK_Propiedades_Items">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Atributo" EntitySet="Atributo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Colores" Association="Self.FK_Items_Colores">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estacion_Trabajo_Estado_Estacion_Trabajo" Association="Self.FK_Estacion_Trabajo_Estado_Estacion_Trabajo">
+            <End Role="Estado_Estacion_Trabajo" EntitySet="Estado_Estacion_Trabajo" />
+            <End Role="Estacion_Trabajo" EntitySet="Estacion_Trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estacion_Trabajo_Figura" Association="Self.FK_Estacion_Trabajo_Figura">
+            <End Role="Figura" EntitySet="Figura" />
+            <End Role="Estacion_Trabajo" EntitySet="Estacion_Trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historico_Estacion_Trabajo_Estacion_Trabajo" Association="Self.FK_Historico_Estacion_Trabajo_Estacion_Trabajo">
+            <End Role="Estacion_Trabajo" EntitySet="Estacion_Trabajo" />
+            <End Role="Historico_Estacion_Trabajo" EntitySet="Historico_Estacion_Trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Eventos_Estados" Association="Self.FK_Eventos_Estados">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Estados" Association="Self.FK_Items_Estados">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historico_Estacion_Trabajo_Estado_Estacion_Trabajo" Association="Self.FK_Historico_Estacion_Trabajo_Estado_Estacion_Trabajo">
+            <End Role="Estado_Estacion_Trabajo" EntitySet="Estado_Estacion_Trabajo" />
+            <End Role="Historico_Estacion_Trabajo" EntitySet="Historico_Estacion_Trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historicos_Eventos" Association="Self.FK_Historicos_Eventos">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="Historico" EntitySet="Historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historico_Estacion_Trabajo_Figura" Association="Self.FK_Historico_Estacion_Trabajo_Figura">
+            <End Role="Figura" EntitySet="Figura" />
+            <End Role="Historico_Estacion_Trabajo" EntitySet="Historico_Estacion_Trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Figuras" Association="Self.FK_Items_Figuras">
+            <End Role="Figura" EntitySet="Figura" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propiedad_Figura" Association="Self.FK_Propiedad_Figura">
+            <End Role="Figura" EntitySet="Figura" />
+            <End Role="Propiedad" EntitySet="Propiedad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historicos_Items" Association="Self.FK_Historicos_Items">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Historico" EntitySet="Historico" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBLPFModelStoreContainer" CdmEntityContainer="DBLPFEntities">
+          <EntitySetMapping Name="Atributo">
+            <EntityTypeMapping TypeName="DBLPFModel.Atributo">
+              <MappingFragment StoreEntitySet="Atributo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Item" ColumnName="ID_Item" />
+                <ScalarProperty Name="ID_Propiedad" ColumnName="ID_Propiedad" />
+                <ScalarProperty Name="Medida" ColumnName="Medida" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Color">
+            <EntityTypeMapping TypeName="DBLPFModel.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Color1" ColumnName="Color" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estacion_Trabajo">
+            <EntityTypeMapping TypeName="DBLPFModel.Estacion_Trabajo">
+              <MappingFragment StoreEntitySet="Estacion_Trabajo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID_Estado_Trabajo" ColumnName="ID_Estado_Trabajo" />
+                <ScalarProperty Name="Modo_ID_Figura" ColumnName="Modo_ID_Figura" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estado">
+            <EntityTypeMapping TypeName="DBLPFModel.Estado">
+              <MappingFragment StoreEntitySet="Estado">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Estado1" ColumnName="Estado" />
+                <ScalarProperty Name="ID_Estacion" ColumnName="ID_Estacion" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estado_Estacion_Trabajo">
+            <EntityTypeMapping TypeName="DBLPFModel.Estado_Estacion_Trabajo">
+              <MappingFragment StoreEntitySet="Estado_Estacion_Trabajo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Disponible" ColumnName="Disponible" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evento">
+            <EntityTypeMapping TypeName="DBLPFModel.Evento">
+              <MappingFragment StoreEntitySet="Evento">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Evento1" ColumnName="Evento" />
+                <ScalarProperty Name="Estado_Inicial" ColumnName="Estado_Inicial" />
+                <ScalarProperty Name="Estado_Final" ColumnName="Estado_Final" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Figura">
+            <EntityTypeMapping TypeName="DBLPFModel.Figura">
+              <MappingFragment StoreEntitySet="Figura">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Figura1" ColumnName="Figura" />
+                <ScalarProperty Name="Numero_Atributos" ColumnName="Numero_Atributos" />
+                <ScalarProperty Name="Formula" ColumnName="Formula" />
+                <ScalarProperty Name="Tiempo_Promedio" ColumnName="Tiempo_Promedio" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Historico">
+            <EntityTypeMapping TypeName="DBLPFModel.Historico">
+              <MappingFragment StoreEntitySet="Historico">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Item" ColumnName="ID_Item" />
+                <ScalarProperty Name="ID_Evento" ColumnName="ID_Evento" />
+                <ScalarProperty Name="Tiempo" ColumnName="Tiempo" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Historico_Estacion_Trabajo">
+            <EntityTypeMapping TypeName="DBLPFModel.Historico_Estacion_Trabajo">
+              <MappingFragment StoreEntitySet="Historico_Estacion_Trabajo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Estacion_Trabajo" ColumnName="ID_Estacion_Trabajo" />
+                <ScalarProperty Name="ID_Estado_Estacion_Trabajo" ColumnName="ID_Estado_Estacion_Trabajo" />
+                <ScalarProperty Name="ID_Modo" ColumnName="ID_Modo" />
+                <ScalarProperty Name="Tiempo_Estacion_Trabajo" ColumnName="Tiempo_Estacion_Trabajo" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item">
+            <EntityTypeMapping TypeName="DBLPFModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Figura" ColumnName="ID_Figura" />
+                <ScalarProperty Name="ID_Color" ColumnName="ID_Color" />
+                <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Propiedad">
+            <EntityTypeMapping TypeName="DBLPFModel.Propiedad">
+              <MappingFragment StoreEntitySet="Propiedad">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Figura" ColumnName="ID_Figura" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Origin_Date" ColumnName="Origin_Date" />
+                <ScalarProperty Name="Edit_Date" ColumnName="Edit_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

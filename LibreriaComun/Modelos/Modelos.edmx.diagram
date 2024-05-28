@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fdd72b98fd7e445893c1bca6330c0ca3" Name="Diagram1">
+        <EntityTypeShape EntityType="DBLPFModel.Atributo" Width="1.5" PointX="8.25" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBLPFModel.Color" Width="1.5" PointX="3.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBLPFModel.Estacion_Trabajo" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBLPFModel.Estado" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBLPFModel.Estado_Estacion_Trabajo" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBLPFModel.Evento" Width="1.5" PointX="9" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBLPFModel.Figura" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBLPFModel.Historico" Width="1.5" PointX="11.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBLPFModel.Historico_Estacion_Trabajo" Width="1.5" PointX="8.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBLPFModel.Item" Width="1.5" PointX="6" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBLPFModel.Propiedad" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+        <AssociationConnector Association="DBLPFModel.FK_Atributo_Propiedad" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Propiedades_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Items_Colores" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Estacion_Trabajo_Estado_Estacion_Trabajo" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Estacion_Trabajo_Figura" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Historico_Estacion_Trabajo_Estacion_Trabajo" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Eventos_Estados" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Items_Estados" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Historico_Estacion_Trabajo_Estado_Estacion_Trabajo" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Historicos_Eventos" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Historico_Estacion_Trabajo_Figura" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Items_Figuras" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Propiedad_Figura" ManuallyRouted="false" />
+        <AssociationConnector Association="DBLPFModel.FK_Historicos_Items" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
