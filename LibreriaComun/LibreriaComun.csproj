@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clases\ContadorTiempo.cs" />
+    <Compile Include="Clases\ItemController.cs" />
+    <Compile Include="Clases\JuguetesConsola.cs" />
     <Compile Include="Clases\Receptor.cs" />
     <Compile Include="DataContext\DataContext.cs" />
     <Compile Include="Modelos\Atributo.cs">
@@ -56,6 +58,7 @@
     <Compile Include="Modelos\Color.cs">
       <DependentUpon>Modelos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\EstacionDyM.cs" />
     <Compile Include="Modelos\Estacion_Trabajo.cs">
       <DependentUpon>Modelos.tt</DependentUpon>
     </Compile>
