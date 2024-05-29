@@ -19,6 +19,9 @@ namespace LibreriaComun.Modelos
         {
             this.Atributo = new HashSet<Atributo>();
             this.Historico = new HashSet<Historico>();
+            this.IsActive = true;
+            this.Origin_Date = DateTime.UtcNow;
+            this.Edit_Date = DateTime.UtcNow;
         }
     
         public int ID { get; set; }
