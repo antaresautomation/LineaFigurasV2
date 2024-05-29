@@ -40,28 +40,32 @@ namespace LibreriaComun.Clases
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public void GenerarEstacion(int number, string shape, string station)
+        static void GenerarEstacion(int number, string shape, string station, bool isAvailable)
         {
-            Console.WriteLine("+---------------------------------+");
-            Console.WriteLine("| Queue  | " + station.PadRight(23) + "|");
-            Console.WriteLine("+---------------------------------+");
-            Console.WriteLine($"| {number.ToString().PadRight(6)} | {shape.PadRight(22)} |");
-            Console.WriteLine("+---------------------------------+");
+            int columnWidth = 24;
+
+            Console.WriteLine("+-----------------------------+");
+            Console.WriteLine("| Tipo de estación | " + station.PadRight(columnWidth - 16) + "|");
+            Console.WriteLine("+-----------------------------+");
+            Console.WriteLine("| Disponibilidad  | " + (isAvailable ? "Disponible" : "No disponible").PadRight(columnWidth - 16) + "|");
+            Console.WriteLine("+-----------------------------+");
+            Console.WriteLine("| Figura           | ");
+            Console.WriteLine("+-----------------------------+");
 
             switch (shape.ToLower())
             {
                 case "cuadrado":
                     for (int i = 0; i < 5; i++)
                     {
-                        Console.Write("|        | ");
-                        Console.WriteLine(new string('*', 5 * 2));
+                        Console.Write("| ");
+                        Console.WriteLine(new string('*', 5 * 2).PadRight(columnWidth - 1) + "|");
                     }
                     break;
                 case "rectangulo":
                     for (int i = 0; i < 4; i++)
                     {
-                        Console.Write("|        | ");
-                        Console.WriteLine(new string('*', 7 * 2));
+                        Console.Write("| ");
+                        Console.WriteLine(new string('*', 7 * 2).PadRight(columnWidth - 1) + "|");
                     }
                     break;
                 case "circulo":
@@ -70,19 +74,20 @@ namespace LibreriaComun.Clases
                     double rIn = radius - thickness, rOut = radius + thickness;
                     for (double y = radius; y >= -radius; --y)
                     {
-                        Console.Write("|        | ");
+                        string line = "";
                         for (double x = -radius; x < rOut; x += 0.5)
                         {
                             double value = x * x + y * y;
                             if (value >= rIn * rIn && value <= rOut * rOut)
                             {
-                                Console.Write("*");
+                                line += "*";
                             }
                             else
                             {
-                                Console.Write(" ");
+                                line += " ";
                             }
                         }
+                        Console.Write("| " + line.PadRight(columnWidth - 1) + "|");
                         Console.WriteLine();
                     }
                     break;
@@ -90,19 +95,22 @@ namespace LibreriaComun.Clases
                     int height = 5;
                     for (int i = 1; i <= height; i++)
                     {
-                        Console.Write("|        | ");
-                        Console.WriteLine(new string(' ', height - i) + new string('*', i * 2));
+                        Console.Write("| ");
+                        string line = new string(' ', height - i) + new string('*', i * 2);
+                        Console.WriteLine(line.PadRight(columnWidth - 1) + "|");
                     }
                     break;
                 case "vacio":
                     // No dibujar nada
                     break;
                 default:
-                    Console.WriteLine("|        | ocupada       |");
+                    Console.WriteLine("| " + shape.PadRight(columnWidth - 1) + "|");
                     break;
             }
 
-            Console.WriteLine("+---------------------------------+");
+            Console.WriteLine("+-----------------------------+");
+            Console.WriteLine("| Queue  | " + number.ToString().PadRight(columnWidth - 9) + "|");
+            Console.WriteLine("+-----------------------------+");
         }
     }
 }
