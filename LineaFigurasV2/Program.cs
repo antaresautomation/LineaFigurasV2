@@ -68,7 +68,10 @@ namespace LineaFigurasV2
                 {
                     ID_Figura = opcionFigura,
                     ID_Color = opcionColor,
-                    ID_Estado = 0
+                    ID_Estado = 0,
+                    IsActive = true,
+                    Origin_Date = DateTime.Now,
+                    Edit_Date = DateTime.Now
                 };
 
                 db.Item.Add(nuevoItem);
