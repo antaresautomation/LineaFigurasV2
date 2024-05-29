@@ -40,7 +40,7 @@ namespace LibreriaComun.Clases
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        static void GenerarEstacion(int number, string shape, string station, bool isAvailable)
+        static public void GenerarEstacion(int number, string shape, string station, bool isAvailable)
         {
             int columnWidth = 24;
 
