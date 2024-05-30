@@ -44,13 +44,15 @@ namespace LibreriaComun.Clases
         {
             int columnWidth = 24;
 
-            Console.WriteLine("+-----------------------------+");
+            string row = "+-----------------------------+";
+
+            Console.WriteLine(row);
             Console.WriteLine("| Tipo de estación | " + station.PadRight(columnWidth - 16) + "|");
-            Console.WriteLine("+-----------------------------+");
-            Console.WriteLine("| Disponibilidad  | " + (isAvailable ? "Disponible" : "No disponible").PadRight(columnWidth - 16) + "|");
-            Console.WriteLine("+-----------------------------+");
-            Console.WriteLine("| Figura           | ");
-            Console.WriteLine("+-----------------------------+");
+            Console.WriteLine(row);
+            Console.WriteLine("| Disponibilidad   | " + (isAvailable ? "Disponible" : "No disponible").PadRight(columnWidth - 16) + "|");
+            Console.WriteLine(row);
+            Console.WriteLine("| Figura           | " + (shape).PadRight(columnWidth - 16) + "|");
+            Console.WriteLine(row);
 
             switch (shape.ToLower())
             {
@@ -108,9 +110,9 @@ namespace LibreriaComun.Clases
                     break;
             }
 
-            Console.WriteLine("+-----------------------------+");
-            Console.WriteLine("| Queue  | " + number.ToString().PadRight(columnWidth - 9) + "|");
-            Console.WriteLine("+-----------------------------+");
+            Console.WriteLine(row);
+            Console.WriteLine("| Queue  | " + number.ToString().PadRight(columnWidth - 10) + "|");
+            Console.WriteLine(row);
         }
 
         public void MostrarProgreso(int milliseconds, int totalItems)
