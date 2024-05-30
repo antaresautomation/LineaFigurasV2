@@ -107,6 +107,7 @@ namespace MaquinaDeEstados
                         break;
 
                     case 5:
+                        Console.Clear();
                         consola.GirarBarrita(500);
                         Salir();
                         break;
