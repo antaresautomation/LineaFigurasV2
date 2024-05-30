@@ -18,8 +18,9 @@ namespace LibreriaComun.Clases
             Evento evento = item.Estado.Evento.Where(x => x.Estado_Final != 99).FirstOrDefault();
             return evento;
         }
-        public static int ObtenerEstadoSiguiente(Evento evento)
+        public static int ObtenerEstadoSiguiente(Item item)
         {
+            Evento evento = ObtenerEvento(item);
             return evento != null ? evento.Estado_Final : -1;
         }
         public static Estacion_Trabajo ObtenerEstacion(int ID_Estacion_Trabajo)
@@ -179,7 +180,7 @@ namespace LibreriaComun.Clases
             if (VerificarDisponibilidadYModo(EstacionID,item.ID_Figura))
             {
                 RegistrarHistoricoEstacion(SetearEstacionOcupada(estacion));
-                CambiarEstadoItem(item, ObtenerEstadoSiguiente(evento));
+                CambiarEstadoItem(item, ObtenerEstadoSiguiente(item));
                 RegistrarHistoricoItem(item, evento);
             }
             else
