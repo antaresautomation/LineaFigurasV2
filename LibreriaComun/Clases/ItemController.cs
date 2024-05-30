@@ -210,11 +210,7 @@ namespace LibreriaComun.Clases
                 RegistrarHistoricoItem(item, evento);
                 return true;
             }
-            else
-            {
-                Console.WriteLine("WTF PP");
                 return false;
-            }
         }
         static public int ListaMenu(Estacion_Trabajo estacion, List<Item> items)
         {
@@ -242,29 +238,24 @@ namespace LibreriaComun.Clases
             }
         }
 
-        static public void Scrap(Item item)
+        static public void Scrap(int EstacionID, Item item)
         {
-            // cambio el estado del item a descartado (ID 99)
-            item.ID_Estado = 99;
-            db.SaveChanges();
+            Estacion_Trabajo estacion = ObtenerEstacion(EstacionID);
 
-            // cambiar la estacion actual a DISPONIBLE
-            Estacion_Trabajo estacion = ObtenerEstacion(item.ID_Estacion_Trabajo);
-            estacion.ID_Estado_Trabajo = 1; // DISPONIBLE
-            db.SaveChanges();
+            Evento eventoActual = ObtenerEvento(item);
 
-            // registrar en el historico el item con el evento
-            Evento evento = new Evento
-            {
-                ID_Item = item.ID,
-                Estado_Final = 99,
-                Fecha = DateTime.Now
-            };
-            db.Evento.Add(evento);
-            db.SaveChanges();
+            // Registrar el item en el historico antes de cambiar su estado
+            RegistrarHistoricoItem(item, eventoActual);
 
-            // registrar en historico estacion de trabajo el cambio de estacion
+            // Registrar el cambio de estado en el historico
             RegistrarHistoricoEstacion(estacion);
+
+            // Cambiar el estado del item a scrap
+            int estadoScrap = 99; // Sugerencia de Martin
+            CambiarEstadoItem(item, estadoScrap);
+
+            // Setear la estacion como disponible
+            SetearEstacionDisponible(estacion);
         }
     }
 }

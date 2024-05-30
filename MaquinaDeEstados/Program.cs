@@ -95,12 +95,12 @@ namespace MaquinaDeEstados
                     case 2:
                         if(ItemController.Siguiente(id_estacion, items))
                         {
-                            consola.GirarBarrita(10000);
+                            consola.GirarBarrita(2000);
                             Console.WriteLine("Exito crack, ha pasado la siguiente figura sin problema");
                         }
                         else
                         {
-                            consola.GirarBarrita(10000);
+                            consola.GirarBarrita(2000);
                             Console.WriteLine("Te dije que esta ocupado PP.");
                         }
                         Console.ReadKey();
@@ -119,7 +119,8 @@ namespace MaquinaDeEstados
                         Console.Clear();
                         consola.GirarBarrita(500);
                         //Salir();
-                        break;
+                        salir = true;
+                        return;
 
                     default:
                         break;
