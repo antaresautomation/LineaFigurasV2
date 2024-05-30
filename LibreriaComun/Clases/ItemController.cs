@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibreriaComun.Modelos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace LibreriaComun.Clases
 {
-    internal class ItemController
+    public class ItemController
     {
+        static DBLPFEntities db = DataContext.DataContext.ObtenerInstancia();
         // Retorna el estado siguiente de un item
         public static int ObtenerEstadoSiguiente(Item item)
         {
@@ -20,6 +22,45 @@ namespace LibreriaComun.Clases
         {
             Modelos.Estacion_Trabajo estacion = db.Estacion_Trabajo.Where(x => x.ID == estacionSiguiente).FirstOrDefault();
             return estacion != null && estacion.ID_Estado_Trabajo == 1 && estacion.Modo_ID_Figura == idFigura;
+        }
+
+        //Obtiene ka Disponibilidad y el modo de la estacion
+        public static Modelos.EstacionDyM ObtenerDisponibilidadYModo(int estacion)
+        {
+            Modelos.Estacion_Trabajo estacionDyT = db.Estacion_Trabajo.Where(x => x.ID == estacion).FirstOrDefault();
+            Modelos.EstacionDyM DyT = new EstacionDyM
+            {
+                Disponibilidad = estacionDyT.Estado_Estacion_Trabajo.Disponible,
+                Modo = estacionDyT.Modo_ID_Figura,
+                Estacion = estacionDyT.Nombre,
+                Figura = estacionDyT.Figura.Figura1
+            };
+            return DyT;
+        }
+
+        //Obtiene la lista que estan en fila antes de entrar a la estacion
+        public static List<Item> ObtenerFilaDeEstacion(int EstacionID)
+        {
+
+            //consigo el id del estado a que corresponde
+            int id_estado = db.Estado.Where(x => x.ID_Estacion == EstacionID).Select(x => x.ID).FirstOrDefault();
+            //Consigo el Estado inicial para buscar los items
+            int EstadoAnterior = db.Evento.Where(x => x.Estado_Final == id_estado).Select(x => x.Estado_Inicial).FirstOrDefault();
+            //Ahora busco los items que estan en espera
+            List<Item> fila = db.Item.Where(x => x.ID_Estado == EstadoAnterior).ToList();
+
+            return fila;
+        }
+
+        //Obtiene el Item que está actualmente en la estacion proporcionada
+
+        public static Item ObtenerItemEstacion(int EstacionID)
+        {
+            int EstadoEstacion = db.Estado.Where(x => x.ID_Estacion == EstacionID).Select(x => x.ID).FirstOrDefault();
+
+            Item item = db.Item.Where(x => x.ID_Estado == EstadoEstacion).FirstOrDefault();
+
+            return item;
         }
 
         // El nombre de la funcion explica lo que hace, no se que escribir aca
@@ -54,6 +95,7 @@ namespace LibreriaComun.Clases
             db.Historico_Estacion_Trabajo.Add(historicoEstacion);
             db.SaveChanges();
         }
+
 
         // Setea la estacion en modo ocupado
         public static void SetearEstacionOcupada(Modelos.Estacion_Trabajo estacion)

@@ -17,21 +17,106 @@ namespace MaquinaDeEstados
     {
         static Modelos.DBLPFEntities db = DataContext.ObtenerInstancia();
 
-        static int CantidadDeEstados;
-
         static async Task Main(string[] args)
         {
-            NamedPipeHelper.VariableChanged += StartItem;
+            //NamedPipeHelper.VariableChanged += StartItem;
 
-            int id = await NamedPipeHelper.RecibirVariableAsync();
+            //int id = await NamedPipeHelper.RecibirVariableAsync();
             
-            await NamedPipeHelper.EscucharCambiosAsync();
+            //await NamedPipeHelper.EscucharCambiosAsync();
+
+            Program p = new Program();
+            p.Menu();
+            Console.ReadKey();
+        }
+
+        public void Menu()  //Crear el menu de estaciones con la base de datos
+        {
+            List<Modelos.Estacion_Trabajo> Estaciones = db.Estacion_Trabajo.ToList();
+
+            foreach (var item in Estaciones)
+            {
+                Console.WriteLine(item.ID + "- Estacion: " + item.Nombre);
+            }
+
+            int estacion = int.Parse(Console.ReadLine());
+            if (Estaciones.Any(x => x.ID == estacion))
+            {
+                Estacion(estacion);
+            }else
+            {
+                Console.WriteLine("Wtf pala");
+            }
+        }
+
+        public void Estacion(int id_estacion)
+        {
+            //Define cuando salir del bucle para esta estacn
+            int salir = 0;
+
+            //Ver si está ocupada la estacion
+            Modelos.EstacionDyM EstacionDyT = ItemController.ObtenerDisponibilidadYModo(id_estacion);
+
+            //Listar los items que están en espera
+            List<Item> items = ItemController.ObtenerFilaDeEstacion(id_estacion);
+
+
+            while (salir >= 0)
+            {
+                Console.Clear();
+                //imprime la estacion
+                JuguetesConsola consola = new JuguetesConsola();
+                consola.GirarBarrita(5000);
+                consola.GenerarEstacion(items.Count,EstacionDyT.Figura,EstacionDyT.Estacion,EstacionDyT.Disponibilidad);
+
+                Console.WriteLine("1.- Avanzar");
+                Console.WriteLine("2.- Siguiente");
+                Console.WriteLine("3.- Descartar");
+                Console.WriteLine("4.- Cambiar Modo");
+                Console.WriteLine("5.- Salir");
+
+                int opcion = int.Parse(Console.ReadLine());
+                
+                switch (opcion)
+                {
+                    case 0: //Hacemos avanzar a la figura, se registra el item con el nuevo estado, se guarda el historial, y pasa a estar desocupado
+                        //Obtener Figura que actualmente está en la estacion
+                        break;
+
+                    case 1:
+                        break;
+
+                    case 2:
+                        break;
+
+                    case 3:
+                        break;
+
+                    case 4:
+                        break;
+                    
+                    case 5:
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            
+        }
+
+        private static void AvanzarFigura(int estacionID)
+        {
+            //Obtener item que se encuentra 
         }
 
         private static void StartItem(int id)
         {
             Task.Run(() =>
             {
+                //Cuenta la cantidad de estados y se va actualiando dependiendo del item
+
+
                 //Obtener el modelo del item recibido
                 Item item = db.Item.FirstOrDefault(x => x.ID == id);
 
@@ -49,12 +134,11 @@ namespace MaquinaDeEstados
                 int EstacionSiguiente = (int)db.Estado.Where(x => x.ID == EstadoSiguiente).Select(x => x.ID_Estacion).FirstOrDefault();
 
 
-                //condicional, que si la estacion que sigue es 0 estará en espera, si es 1 u otro pasa a verificacion de disponibilidad
-                if (EstacionSiguiente != 0)
-                {
-
+            //condicional, que si la estacion que sigue es 0 estará en espera, si es 1 u otro pasa a verificacion de disponibilidad
+            if (EstacionSiguiente != 0)
+            {
                     //ve si hay alguien adelante de el (Que esté en el mismo estado que tu pero adelante de ti)
-                    List<Historico> fila = db.Historico.Where(x => x.ID_Evento == item.ID_Estado).ToList(); //Lista de todos las figuras que estan actualmemte en ese estado
+                    List<Historico> fila = db.Historico.Where(x => x.ID_Evento == Evento.ID).ToList(); //Lista de todos las figuras que estan actualmemte en ese estado
 
                     int posicion = fila.FindIndex(x => x.ID_Evento == Evento.ID);
 
@@ -62,7 +146,7 @@ namespace MaquinaDeEstados
                     {
                         return; //regresa hasta que este desocupado
                     }
-
+                    
                     //Verifica si hay disponibilidad de la estación y el modo
                     Modelos.Estacion_Trabajo Estacion = db.Estacion_Trabajo.Where(x => x.ID == EstacionSiguiente).FirstOrDefault();
 
@@ -158,10 +242,6 @@ namespace MaquinaDeEstados
                     }
                 }
             });
-        }
-        private static void OnVariableChanged(int newValue)
-        {
-            Console.WriteLine("Valor recibido en Proyecto B: " + newValue);
         }
     }
 }
