@@ -82,9 +82,6 @@ namespace MaquinaDeEstados
                 Console.WriteLine("5.- Salir");
 
                 int opcion = int.Parse(Console.ReadLine());
-
-                Modelos.Item item = new Modelos.Item();
-                item = items[0];
                 
                 switch (opcion)
                 {
@@ -96,9 +93,16 @@ namespace MaquinaDeEstados
                         continue;
 
                     case 2:
-                        ItemController.Siguiente(id_estacion, item);
-                        consola.GirarBarrita(10000);
-                        Console.WriteLine("Exito crack, ha pasado la siguiente figura sin problema");
+                        if(ItemController.Siguiente(id_estacion, items))
+                        {
+                            consola.GirarBarrita(10000);
+                            Console.WriteLine("Exito crack, ha pasado la siguiente figura sin problema");
+                        }
+                        else
+                        {
+                            consola.GirarBarrita(10000);
+                            Console.WriteLine("Te dije que esta ocupado PP.");
+                        }
                         Console.ReadKey();
                         continue;
 
@@ -108,12 +112,13 @@ namespace MaquinaDeEstados
                     case 4:
                         Console.Clear();
                         consola.GirarBarrita(500);
-                        CambiarModo(id_estacion);
+                        //CambiarModo(id_estacion);
                         break;
 
                     case 5:
+                        Console.Clear();
                         consola.GirarBarrita(500);
-                        Salir();
+                        //Salir();
                         break;
 
                     default:
