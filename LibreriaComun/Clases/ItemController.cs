@@ -159,5 +159,23 @@ namespace LibreriaComun.Clases
                 return double.NaN;
             }
         }
+        static public void Siguiente(int EstacionID,Item item)
+        {
+            Estacion_Trabajo estacion = ObtenerEstacion(EstacionID);
+            Evento evento = ObtenerEvento(item);
+            if (VerificarDisponibilidadYModo(EstacionID,item.ID_Figura))
+            {
+                
+                SetearEstacionOcupada(estacion);
+                CambiarEstadoItem(item, ObtenerEstadoSiguiente(evento));
+                RegistrarHistoricoItem(item, evento);
+                RegistrarHistoricoEstacion(estacion);
+            }
+            else
+            {
+                Console.WriteLine("WTF PP");
+            }
+        }
     }
 }
+
