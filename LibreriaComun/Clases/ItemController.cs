@@ -191,9 +191,17 @@ namespace LibreriaComun.Clases
 
         }
 
-        static public void Siguiente(int EstacionID,Item item)
+        static public void Siguiente(int EstacionID,List<Item> items)
         {
+
+            int index;
             Estacion_Trabajo estacion = ObtenerEstacion(EstacionID);
+            do
+            {
+                index = ListaMenu(estacion, items);
+            } while (index > -1);
+            
+            Item item = items[index];
             Evento evento = ObtenerEvento(item);
             if (VerificarDisponibilidadYModo(EstacionID,item.ID_Figura))
             {

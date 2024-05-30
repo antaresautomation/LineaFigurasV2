@@ -82,9 +82,6 @@ namespace MaquinaDeEstados
                 Console.WriteLine("5.- Salir");
 
                 int opcion = int.Parse(Console.ReadLine());
-
-                Modelos.Item item = new Modelos.Item();
-                item = items[0];
                 
                 switch (opcion)
                 {
@@ -96,7 +93,7 @@ namespace MaquinaDeEstados
                         continue;
 
                     case 2:
-                        ItemController.Siguiente(id_estacion, item);
+                        ItemController.Siguiente(id_estacion, items);
                         consola.GirarBarrita(10000);
                         Console.WriteLine("Exito crack, ha pasado la siguiente figura sin problema");
                         Console.ReadKey();
