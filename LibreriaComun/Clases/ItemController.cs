@@ -188,6 +188,31 @@ namespace LibreriaComun.Clases
                 Console.WriteLine("WTF PP");
             }
         }
+
+        static public void Scrap(Item item)
+        {
+            // cambio el estado del item a descartado (ID 99)
+            item.ID_Estado = 99;
+            db.SaveChanges();
+
+            // cambiar la estacion actual a DISPONIBLE
+            Estacion_Trabajo estacion = ObtenerEstacion(item.ID_Estacion_Trabajo);
+            estacion.ID_Estado_Trabajo = 1; // DISPONIBLE
+            db.SaveChanges();
+
+            // registrar en el historico el item con el evento
+            Evento evento = new Evento
+            {
+                ID_Item = item.ID,
+                Estado_Final = 99,
+                Fecha = DateTime.Now
+            };
+            db.Evento.Add(evento);
+            db.SaveChanges();
+
+            // registrar en historico estacion de trabajo el cambio de estacion
+            RegistrarHistoricoEstacion(estacion);
+        }
     }
 }
 
