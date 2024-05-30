@@ -117,10 +117,12 @@ namespace LibreriaComun.Clases
 
 
         // Setea la estacion en modo ocupado
-        public static void SetearEstacionOcupada(Estacion_Trabajo estacion)
+        public static Estacion_Trabajo SetearEstacionOcupada(Estacion_Trabajo estacion)
         {
             estacion.ID_Estado_Trabajo = 2; // poner ocupado la estación
             db.SaveChanges();
+
+            return estacion;
         }
 
         // Ves? No tiene sentido que lo explique
