@@ -91,6 +91,13 @@ namespace LibreriaComun.Clases
             db.SaveChanges();
         }
 
+        public static Modelos.Evento ObtenerEventoSiguiente(Item item)
+        {
+            Evento Evento = item.Estado.Evento.Where(x => x.Estado_Final != 99).FirstOrDefault();
+
+            return Evento;
+        }
+
         // Aca tampoco
         public static void RegistrarHistoricoEstacion(Estacion_Trabajo estacion)
         {
@@ -117,17 +124,21 @@ namespace LibreriaComun.Clases
         }
 
         // Ves? No tiene sentido que lo explique
-        public static void SetearEstacionDisponible(Estacion_Trabajo estacion)
+        public static Estacion_Trabajo SetearEstacionDisponible(Estacion_Trabajo estacion)
         {
             estacion.ID_Estado_Trabajo = 1; // poner disponible la estación
             db.SaveChanges();
+
+            return estacion;
         }
 
         // Hace avanzar al item al estado siguiente
-        public static void CambiarEstadoItem(Item item, int estadoSiguiente)
+        public static Item CambiarEstadoItem(Item item, int estadoSiguiente)
         {
             item.ID_Estado = estadoSiguiente;
             db.SaveChanges();
+
+            return item;
         }
         static public double CalcularArea(string Formula, double[] valores)
         {
