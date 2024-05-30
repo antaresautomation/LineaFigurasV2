@@ -11,6 +11,7 @@ using LibreriaComun.DataContext;
 using LibreriaComun.Modelos;
 using Modelos = LibreriaComun.Modelos;
 
+
 namespace MaquinaDeEstados
 {
     class Program
@@ -51,7 +52,7 @@ namespace MaquinaDeEstados
 
         public void Estacion(int id_estacion)
         {
-            //Define cuando salir del bucle para esta estacn
+            //Define cuando salir del bucle para esta estacn por que no usas un bool? e.e
             int salir = 0;
 
             //Ver si está ocupada la estacion
@@ -76,6 +77,9 @@ namespace MaquinaDeEstados
                 Console.WriteLine("5.- Salir");
 
                 int opcion = int.Parse(Console.ReadLine());
+
+                Modelos.Item item = new Modelos.Item();
+                item = items[0];
                 
                 switch (opcion)
                 {
@@ -87,7 +91,8 @@ namespace MaquinaDeEstados
                         break;
 
                     case 2:
-                        break;
+                        ItemController.Siguiente(id_estacion, item);
+                            break;
 
                     case 3:
                         break;

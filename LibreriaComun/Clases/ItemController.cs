@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace LibreriaComun.Clases
 {
@@ -20,15 +22,16 @@ namespace LibreriaComun.Clases
         // Verifica disponibilidad de una estacion
         public static bool VerificarDisponibilidadYModo(int estacionSiguiente, int idFigura)
         {
-            Modelos.Estacion_Trabajo estacion = db.Estacion_Trabajo.Where(x => x.ID == estacionSiguiente).FirstOrDefault();
+            
+            Estacion_Trabajo estacion = ObtenerEstacion(estacionSiguiente);
             return estacion != null && estacion.ID_Estado_Trabajo == 1 && estacion.Modo_ID_Figura == idFigura;
         }
 
         //Obtiene ka Disponibilidad y el modo de la estacion
         public static Modelos.EstacionDyM ObtenerDisponibilidadYModo(int estacion)
         {
-            Modelos.Estacion_Trabajo estacionDyT = db.Estacion_Trabajo.Where(x => x.ID == estacion).FirstOrDefault();
-            Modelos.EstacionDyM DyT = new EstacionDyM
+            Estacion_Trabajo estacionDyT = ObtenerEstacion(estacion);
+            EstacionDyM DyT = new EstacionDyM
             {
                 Disponibilidad = estacionDyT.Estado_Estacion_Trabajo.Disponible,
                 Modo = estacionDyT.Modo_ID_Figura,
@@ -80,7 +83,7 @@ namespace LibreriaComun.Clases
         }
 
         // Aca tampoco
-        public static void RegistrarHistoricoEstacion(Modelos.Estacion_Trabajo estacion)
+        public static void RegistrarHistoricoEstacion(Estacion_Trabajo estacion)
         {
             Modelos.Historico_Estacion_Trabajo historicoEstacion = new Modelos.Historico_Estacion_Trabajo
             {
@@ -98,14 +101,14 @@ namespace LibreriaComun.Clases
 
 
         // Setea la estacion en modo ocupado
-        public static void SetearEstacionOcupada(Modelos.Estacion_Trabajo estacion)
+        public static void SetearEstacionOcupada(Estacion_Trabajo estacion)
         {
             estacion.ID_Estado_Trabajo = 2; // poner ocupado la estación
             db.SaveChanges();
         }
 
         // Ves? No tiene sentido que lo explique
-        public static void SetearEstacionDisponible(Modelos.Estacion_Trabajo estacion)
+        public static void SetearEstacionDisponible(Estacion_Trabajo estacion)
         {
             estacion.ID_Estado_Trabajo = 1; // poner disponible la estación
             db.SaveChanges();
