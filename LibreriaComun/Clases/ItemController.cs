@@ -206,6 +206,29 @@ namespace LibreriaComun.Clases
                 Console.WriteLine("WTF PP");
             }
         }
+        static public int ListaMenu(Estacion_Trabajo estacion, List<Item> items)
+        {
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("     Menu Estacion de Trabajo "+estacion.Nombre);
+            Console.WriteLine("         Lista de Figuras en Espera");
+            Console.WriteLine("--------------------------------------------");
+            foreach (Item i in items)
+            {
+                Console.WriteLine($"|{i.ID}| {i.Figura} : {i.Color} ");
+            }
+            Console.WriteLine("Lista");
+            Console.WriteLine("Ingrese ID de Figura Seleccionada");
+            string input = Console.ReadLine();
+            if (int.TryParse(input, out int index))
+            {
+                return index;
+            }
+            else
+            {
+                return -1;
+            }
+        }
     }
 }
 
