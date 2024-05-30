@@ -173,6 +173,24 @@ namespace LibreriaComun.Clases
                 return double.NaN;
             }
         }
+        public static void AvanzarFigura(int estacionID)   //Obtener Figura que actualmente está en la estacion
+        {
+            Item item = ItemController.ObtenerItemEstacion(estacionID);
+            //Obtenemos el evento que sigue
+            Evento evento = ItemController.ObtenerEventoSiguiente(item);
+            //Pasamos al siguiente estado el item
+            item = ItemController.CambiarEstadoItem(item, evento.Estado_Final);
+            //Registramos historico
+            ItemController.RegistrarHistoricoItem(item, evento);
+
+            //Pongo en disponible la estacion
+            Estacion_Trabajo estacion = db.Estacion_Trabajo.FirstOrDefault(x => x.ID == estacionID);
+            estacion = ItemController.SetearEstacionDisponible(estacion);
+            //registrar historico estacion
+            ItemController.RegistrarHistoricoEstacion(estacion);
+
+        }
+
         static public void Siguiente(int EstacionID,Item item)
         {
             Estacion_Trabajo estacion = ObtenerEstacion(EstacionID);
