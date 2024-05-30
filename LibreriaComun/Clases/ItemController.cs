@@ -178,11 +178,10 @@ namespace LibreriaComun.Clases
             Evento evento = ObtenerEvento(item);
             if (VerificarDisponibilidadYModo(EstacionID,item.ID_Figura))
             {
-                
-                SetearEstacionOcupada(estacion);
+
+                RegistrarHistoricoEstacion(SetearEstacionOcupada(estacion));
                 CambiarEstadoItem(item, ObtenerEstadoSiguiente(evento));
                 RegistrarHistoricoItem(item, evento);
-                RegistrarHistoricoEstacion(estacion);
             }
             else
             {
