@@ -89,13 +89,18 @@ namespace MaquinaDeEstados
                 switch (opcion)
                 {
                     case 1: //Hacemos avanzar a la figura, se registra el item con el nuevo estado, se guarda el historial, y pasa a estar desocupado
-                        AvanzarFigura(id_estacion);
+                        ItemController.AvanzarFigura(id_estacion);
                         consola.GirarBarrita(10000);
-                        break;
+                        Console.WriteLine("Exito crack, ha avanzado la figura sin problema");
+                        Console.ReadKey();
+                        continue;
 
                     case 2:
                         ItemController.Siguiente(id_estacion, item);
-                        break;
+                        consola.GirarBarrita(10000);
+                        Console.WriteLine("Exito crack, ha pasado la siguiente figura sin problema");
+                        Console.ReadKey();
+                        continue;
 
                     case 3:
                         break;
@@ -118,88 +123,7 @@ namespace MaquinaDeEstados
             
         }
 
-        private void Salir()
-        {
-            bool salir = true;
-            Console.Clear();
-            Menu();
-        }
-
-        private void CambiarModo(int id_estacion)
-        {
-            Console.Clear();
-            
-            Console.WriteLine("CAMBIAR MODO \n");
-
-            Console.WriteLine("Figuras Disponibles: \n");
-
-            List<Figura> figs = db.Figura.ToList();
-
-            foreach (var figura in figs)
-            {
-                Console.WriteLine($"{figura.ID}. {figura.Figura1}");
-            }
-
-            int modo = 0;
-
-            bool validInput = false;
-
-            while (!validInput)
-            {
-                Console.WriteLine("\nSelecciona el nuevo modo:");
-
-                string input = Console.ReadLine();
-
-                try
-                {
-                    modo = int.Parse(input);
-
-                    if (figs.Any(f => f.ID == modo))
-                    {
-                        validInput = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Modo no válido, intenta de nuevo.");
-                    }
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Entrada no válida. Por favor, ingresa un número.");
-                }
-            }
-
-            var estacion = db.Estacion_Trabajo.FirstOrDefault(x => x.ID == id_estacion);
-            if (estacion != null)
-            {
-                estacion.Modo_ID_Figura = modo;
-                db.SaveChanges();
-                Console.WriteLine("\nModo cambiado exitosamente.");
-            }
-            else
-            {
-                Console.WriteLine("Error: Estación no encontrada.");
-            }
-            Thread.Sleep(500);
-        }
-
-        private static void AvanzarFigura(int estacionID)   //Obtener Figura que actualmente está en la estacion
-        {
-            Item item = ItemController.ObtenerItemEstacion(estacionID);
-            //Obtenemos el evento que sigue
-            Evento evento = ItemController.ObtenerEventoSiguiente(item);
-            //Pasamos al siguiente estado el item
-            item = ItemController.CambiarEstadoItem(item,evento.Estado_Final);
-            //Registramos historico
-            ItemController.RegistrarHistoricoItem(item, evento);
-
-            //Pongo en disponible la estacion
-            Estacion_Trabajo estacion = db.Estacion_Trabajo.FirstOrDefault(x => x.ID == estacionID);
-            estacion = ItemController.SetearEstacionDisponible(estacion);
-            //registrar historico estacion
-            ItemController.RegistrarHistoricoEstacion(estacion);
-
-        }
+       
 
         private static void StartItem(int id)
         {
