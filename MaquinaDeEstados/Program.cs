@@ -36,10 +36,11 @@ namespace MaquinaDeEstados
 
             foreach (var item in Estaciones)
             {
-                Console.WriteLine(item.ID + "- Estacion: " + item.Nombre);
+                Console.WriteLine(item.ID + ".- Estacion: " + item.Nombre);
             }
 
             int estacion = int.Parse(Console.ReadLine());
+
             if (Estaciones.Any(x => x.ID == estacion))
             {
                 Estacion(estacion);
@@ -51,15 +52,12 @@ namespace MaquinaDeEstados
 
         public void Estacion(int id_estacion)
         {
-            //Define cuando salir del bucle para esta estacn
+            //Define cuando salir del bucle para esta estacion
             int salir = 0;
-
             //Ver si está ocupada la estacion
             Modelos.EstacionDyM EstacionDyT = ItemController.ObtenerDisponibilidadYModo(id_estacion);
-
             //Listar los items que están en espera
             List<Item> items = ItemController.ObtenerFilaDeEstacion(id_estacion);
-
 
             while (salir >= 0)
             {
@@ -79,11 +77,9 @@ namespace MaquinaDeEstados
                 
                 switch (opcion)
                 {
-                    case 0: //Hacemos avanzar a la figura, se registra el item con el nuevo estado, se guarda el historial, y pasa a estar desocupado
-                        //Obtener Figura que actualmente está en la estacion
-                        break;
-
-                    case 1:
+                    case 1: //Hacemos avanzar a la figura, se registra el item con el nuevo estado, se guarda el historial, y pasa a estar desocupado
+                        AvanzarFigura(id_estacion);
+                        consola.GirarBarrita(10000);
                         break;
 
                     case 2:
@@ -105,9 +101,22 @@ namespace MaquinaDeEstados
             
         }
 
-        private static void AvanzarFigura(int estacionID)
+        private static void AvanzarFigura(int estacionID)   //Obtener Figura que actualmente está en la estacion
         {
-            //Obtener item que se encuentra 
+            Item item = ItemController.ObtenerItemEstacion(estacionID);
+            //Obtenemos el evento que sigue
+            Evento evento = ItemController.ObtenerEventoSiguiente(item);
+            //Pasamos al siguiente estado el item
+            item = ItemController.CambiarEstadoItem(item,evento.Estado_Final);
+            //Registramos historico
+            ItemController.RegistrarHistoricoItem(item, evento);
+
+            //Pongo en disponible la estacion
+            Estacion_Trabajo estacion = db.Estacion_Trabajo.FirstOrDefault(x => x.ID == estacionID);
+            estacion = ItemController.SetearEstacionDisponible(estacion);
+            //registrar historico estacion
+            ItemController.RegistrarHistoricoEstacion(estacion);
+
         }
 
         private static void StartItem(int id)
