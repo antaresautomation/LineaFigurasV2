@@ -129,5 +129,35 @@ namespace LibreriaComun.Clases
             item.ID_Estado = estadoSiguiente;
             db.SaveChanges();
         }
+        static public double CalcularArea(string Formula, double[] valores)
+        {
+            // Parsear el XML para obtener la fórmula
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Formula);
+            string formula = doc.DocumentElement.InnerText;
+            // Reemplazar los marcadores de posición en la fórmula con los valores
+            for (int i = 0; i < valores.Length; i++)
+            {
+                formula = formula.Replace("{" + i + "}", valores[i].ToString());
+            }
+            // Evaluar la fórmula y devolver el resultado
+            return EvaluarFormula(formula);
+        }
+
+        static public double EvaluarFormula(string formula)
+        {
+            try
+            {
+                // Utilizar la función Eval de C# para evaluar la expresión matemática
+                return (double)new System.Xml.XPath.XPathDocument
+                (new System.IO.StringReader("<r/>")).CreateNavigator().Evaluate
+                ("number(" + new System.Text.RegularExpressions.Regex(@"([\+\-\*])").Replace(formula, " ${1} ").Replace("/", " div ").Replace("%", " mod ") + ")");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al evaluar la fórmula: " + ex.Message);
+                return double.NaN;
+            }
+        }
     }
 }
