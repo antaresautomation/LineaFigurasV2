@@ -181,7 +181,7 @@ namespace LibreriaComun.Clases
             {
 
                 RegistrarHistoricoEstacion(SetearEstacionOcupada(estacion));
-                CambiarEstadoItem(item, ObtenerEstadoSiguiente(evento));
+                CambiarEstadoItem(item, ObtenerEstadoSiguiente(item));
                 RegistrarHistoricoItem(item, evento);
             }
             else
