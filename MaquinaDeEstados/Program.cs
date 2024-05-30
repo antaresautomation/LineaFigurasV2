@@ -82,13 +82,18 @@ namespace MaquinaDeEstados
                 switch (opcion)
                 {
                     case 1: //Hacemos avanzar a la figura, se registra el item con el nuevo estado, se guarda el historial, y pasa a estar desocupado
-                        AvanzarFigura(id_estacion);
+                        ItemController.AvanzarFigura(id_estacion);
                         consola.GirarBarrita(10000);
-                        break;
+                        Console.WriteLine("Exito crack, ha avanzado la figura sin problema");
+                        Console.ReadKey();
+                        continue;
 
                     case 2:
                         ItemController.Siguiente(id_estacion, item);
-                            break;
+                        consola.GirarBarrita(10000);
+                        Console.WriteLine("Exito crack, ha pasado la siguiente figura sin problema");
+                        Console.ReadKey();
+                        continue;
 
                     case 3:
                         break;
@@ -106,23 +111,7 @@ namespace MaquinaDeEstados
             
         }
 
-        private static void AvanzarFigura(int estacionID)   //Obtener Figura que actualmente está en la estacion
-        {
-            Item item = ItemController.ObtenerItemEstacion(estacionID);
-            //Obtenemos el evento que sigue
-            Evento evento = ItemController.ObtenerEventoSiguiente(item);
-            //Pasamos al siguiente estado el item
-            item = ItemController.CambiarEstadoItem(item,evento.Estado_Final);
-            //Registramos historico
-            ItemController.RegistrarHistoricoItem(item, evento);
-
-            //Pongo en disponible la estacion
-            Estacion_Trabajo estacion = db.Estacion_Trabajo.FirstOrDefault(x => x.ID == estacionID);
-            estacion = ItemController.SetearEstacionDisponible(estacion);
-            //registrar historico estacion
-            ItemController.RegistrarHistoricoEstacion(estacion);
-
-        }
+       
 
         private static void StartItem(int id)
         {
