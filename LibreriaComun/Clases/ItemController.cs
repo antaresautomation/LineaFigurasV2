@@ -191,7 +191,7 @@ namespace LibreriaComun.Clases
 
         }
 
-        static public void Siguiente(int EstacionID,List<Item> items)
+        static public bool Siguiente(int EstacionID,List<Item> items)
         {
 
             int index;
@@ -199,8 +199,8 @@ namespace LibreriaComun.Clases
             do
             {
                 index = ListaMenu(estacion, items);
-            } while (index > -1);
-            
+            } while (index == -1);
+            if (index == 0) return false;
             Item item = items[index];
             Evento evento = ObtenerEvento(item);
             if (VerificarDisponibilidadYModo(EstacionID,item.ID_Figura))
@@ -208,10 +208,12 @@ namespace LibreriaComun.Clases
                 RegistrarHistoricoEstacion(SetearEstacionOcupada(estacion));
                 CambiarEstadoItem(item, ObtenerEstadoSiguiente(item));
                 RegistrarHistoricoItem(item, evento);
+                return true;
             }
             else
             {
                 Console.WriteLine("WTF PP");
+                return false;
             }
         }
         static public int ListaMenu(Estacion_Trabajo estacion, List<Item> items)
@@ -223,14 +225,16 @@ namespace LibreriaComun.Clases
             Console.WriteLine("--------------------------------------------");
             foreach (Item i in items)
             {
-                Console.WriteLine($"|{i.ID}| {i.Figura} : {i.Color} ");
+                Console.WriteLine($"|{i.ID}|  {i.Figura.Figura1} : {i.Color.Color1} ");
             }
-            Console.WriteLine("Lista");
-            Console.WriteLine("Ingrese ID de Figura Seleccionada");
+            Console.WriteLine("Ingrese ID de Figura Seleccionada o ingrese 0 para salir: ");
             string input = Console.ReadLine();
-            if (int.TryParse(input, out int index))
+            if (int.TryParse(input, out int id))
             {
-                return index;
+                if (id == 0) return 0;
+                int index = items.FindIndex(item => item.ID == id);
+                if (index != -1)  return index;
+                else return -1;
             }
             else
             {

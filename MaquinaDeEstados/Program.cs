@@ -93,9 +93,16 @@ namespace MaquinaDeEstados
                         continue;
 
                     case 2:
-                        ItemController.Siguiente(id_estacion, items);
-                        consola.GirarBarrita(10000);
-                        Console.WriteLine("Exito crack, ha pasado la siguiente figura sin problema");
+                        if(ItemController.Siguiente(id_estacion, items))
+                        {
+                            consola.GirarBarrita(10000);
+                            Console.WriteLine("Exito crack, ha pasado la siguiente figura sin problema");
+                        }
+                        else
+                        {
+                            consola.GirarBarrita(10000);
+                            Console.WriteLine("Te dije que esta ocupado PP.");
+                        }
                         Console.ReadKey();
                         continue;
 
