@@ -40,7 +40,7 @@ namespace LibreriaComun.Clases
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        static void GenerarEstacion(int number, string shape, string station, bool isAvailable)
+        public void GenerarEstacion(int number, string shape, string station, bool isAvailable)
         {
             int columnWidth = 24;
 
@@ -111,6 +111,46 @@ namespace LibreriaComun.Clases
             Console.WriteLine("+-----------------------------+");
             Console.WriteLine("| Queue  | " + number.ToString().PadRight(columnWidth - 9) + "|");
             Console.WriteLine("+-----------------------------+");
+        }
+
+        public void MostrarProgreso(int milliseconds, int totalItems)
+        {
+            
+            int totalTime = milliseconds; // ??????????
+            int interval = totalTime / totalItems;
+            int progress = 0;
+
+            Console.CursorVisible = false;
+
+            while (totalTime > 0)
+            {
+                switch (progress % 11)
+                {
+                    case 0: Console.ForegroundColor = ConsoleColor.Red; break;
+                    case 1: Console.ForegroundColor = ConsoleColor.Blue; break;
+                    case 2: Console.ForegroundColor = ConsoleColor.Green; break;
+                    case 3: Console.ForegroundColor = ConsoleColor.Cyan; break;
+                    case 4: Console.ForegroundColor = ConsoleColor.Yellow; break;
+                    case 5: Console.ForegroundColor = ConsoleColor.Magenta; break;
+                    case 6: Console.ForegroundColor = ConsoleColor.DarkRed; break;
+                    case 7: Console.ForegroundColor = ConsoleColor.DarkYellow; break;
+                    case 8: Console.ForegroundColor = ConsoleColor.Gray; break;
+                    case 9: Console.ForegroundColor = ConsoleColor.DarkMagenta; break;
+                    case 10: Console.ForegroundColor = ConsoleColor.DarkBlue; break;
+                }
+                progress++;
+                Console.Write("[");
+                Console.Write(new string('#', progress));
+                Console.Write(new string(' ', totalItems - progress));
+                Console.Write("]");
+
+                Console.SetCursorPosition(Console.CursorLeft - (totalItems + 2), Console.CursorTop);
+                Thread.Sleep(interval);
+                totalTime -= interval;
+            }
+
+            Console.CursorVisible = true;
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
