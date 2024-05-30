@@ -105,13 +105,13 @@ namespace MaquinaDeEstados
                     case 4:
                         Console.Clear();
                         consola.GirarBarrita(500);
-                        CambiarModo(id_estacion);
+                        //CambiarModo(id_estacion);
                         break;
 
                     case 5:
                         Console.Clear();
                         consola.GirarBarrita(500);
-                        Salir();
+                        //Salir();
                         break;
 
                     default:
