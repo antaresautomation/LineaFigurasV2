@@ -13,10 +13,19 @@ namespace LibreriaComun.Clases
     {
         static DBLPFEntities db = DataContext.DataContext.ObtenerInstancia();
         // Retorna el estado siguiente de un item
-        public static int ObtenerEstadoSiguiente(Item item)
+        public static Evento ObtenerEvento(Item item)
         {
             Evento evento = item.Estado.Evento.Where(x => x.Estado_Final != 99).FirstOrDefault();
+            return evento;
+        }
+        public static int ObtenerEstadoSiguiente(Evento evento)
+        {
             return evento != null ? evento.Estado_Final : -1;
+        }
+        public static Estacion_Trabajo ObtenerEstacion(int ID_Estacion_Trabajo)
+        {
+            Estacion_Trabajo estacionDyT =db.Estacion_Trabajo.Where(x => x.ID == ID_Estacion_Trabajo).FirstOrDefault();
+            return estacionDyT;
         }
 
         // Verifica disponibilidad de una estacion
