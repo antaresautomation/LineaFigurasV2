@@ -258,10 +258,13 @@ namespace LibreriaComun.Clases
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("-----------> Lista de Figuras <-------------");
             Console.WriteLine("--------------------------------------------");
+            JuguetesConsola juguete = new JuguetesConsola();
             foreach (Item i in items)
             {
+                juguete.GirarBarrita(500);
                 Console.WriteLine($"|{i.ID}|  {i.Figura.Figura1} : {i.Color.Color1} ");
             }
+            juguete.GirarBarrita(500);
             Console.WriteLine("Presione 0 para salir o Ingrese ID de Figura Seleccionada:");
         }
 
