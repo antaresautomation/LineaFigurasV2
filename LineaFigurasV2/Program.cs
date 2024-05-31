@@ -10,6 +10,7 @@ using static LineaFigurasV2.Clases.ColoresWindows;
 using Modelos = LibreriaComun.Modelos;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using LibreriaComun.Modelos;
 
 namespace LineaFigurasV2
 {
@@ -96,9 +97,13 @@ namespace LineaFigurasV2
 
                 }
                 else if (opcionModo == 1) {
-                    ItemController ItemControl = new ItemController();
+                    List<Item> items = ItemController.ObtenerFilaDeEstacion(1);
+                    foreach (Item i in items)
+                    {
+                        Console.WriteLine($"|{i.ID}|  {i.Figura.Figura1} : {i.Color.Color1} ");
+                    }
 
-                
+
                 }
             }
         }
