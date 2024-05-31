@@ -18,6 +18,11 @@ namespace LibreriaComun.Clases
             Evento evento = item.Estado.Evento.Where(x => x.Estado_Final != 99).FirstOrDefault();
             return evento;
         }
+        public static Evento ObtenerEventoScrap(Item item)
+        {
+            Evento evento = item.Estado.Evento.Where(x => x.Estado_Final == 99).FirstOrDefault();
+            return evento;
+        }
         public static int ObtenerEstadoSiguiente(Item item)
         {
             Evento evento = ObtenerEvento(item);
@@ -84,9 +89,9 @@ namespace LibreriaComun.Clases
                 ID_Item = item.ID,
                 ID_Evento = evento.ID,
                 IsActive = true,
-                Edit_Date = DateTime.Now,
-                Origin_Date = DateTime.Now,
-                Tiempo = DateTime.Now.TimeOfDay
+                Edit_Date = DateTime.UtcNow,
+                Origin_Date = DateTime.UtcNow,
+                Tiempo = DateTime.UtcNow.TimeOfDay
             };
             db.Historico.Add(historicoItem);
             db.SaveChanges();
@@ -108,9 +113,9 @@ namespace LibreriaComun.Clases
                 ID_Estado_Estacion_Trabajo = estacion.ID_Estado_Trabajo,
                 ID_Modo = estacion.Modo_ID_Figura,
                 IsActive = true,
-                Origin_Date = DateTime.Now,
-                Edit_Date = DateTime.Now,
-                Tiempo_Estacion_Trabajo = DateTime.Now.TimeOfDay
+                Origin_Date = DateTime.UtcNow,
+                Edit_Date = DateTime.UtcNow,
+                Tiempo_Estacion_Trabajo = DateTime.UtcNow.TimeOfDay
             };
             db.Historico_Estacion_Trabajo.Add(historicoEstacion);
             db.SaveChanges();
@@ -247,24 +252,39 @@ namespace LibreriaComun.Clases
             }
         }
 
-        static public void Scrap(int EstacionID, Item item)
+        static public void Scrap(int EstacionID)
         {
             Estacion_Trabajo estacion = ObtenerEstacion(EstacionID);
 
-            Evento eventoActual = ObtenerEvento(item);
+            Item item = ObtenerItemEstacion(EstacionID);
 
-            // Registrar el item en el historico antes de cambiar su estado
-            RegistrarHistoricoItem(item, eventoActual);
+            // No uso la funcion de ObtenerEvento porque no jala con el estado final 99
+            Evento eventoActual = ObtenerEventoScrap(item);
 
-            // Registrar el cambio de estado en el historico
-            RegistrarHistoricoEstacion(estacion);
-
-            // Cambiar el estado del item a scrap
+            // Cambio el estado del item a scrap
             int estadoScrap = 99; // Sugerencia de Martin
             CambiarEstadoItem(item, estadoScrap);
 
-            // Setear la estacion como disponible
-            SetearEstacionDisponible(estacion);
+            // Registro el item en el historico antes de cambiar su estado
+            RegistrarHistoricoItem(item, eventoActual);
+
+            // Seteo la estacion como disponible
+            // Registro el cambio de estado en el historico
+            RegistrarHistoricoEstacion(SetearEstacionDisponible(estacion));
+        }
+
+        static public void Cancelar(int EstacionID)
+        {
+            Item item = ObtenerItemEstacion(EstacionID);
+
+            Evento eventoActual = ObtenerEvento(item);
+
+            // Cambiar el estado del item a scrap
+            int estadoCancelado = 100; // Sugerencia de Martin
+            CambiarEstadoItem(item, estadoCancelado);
+
+            // Registrar el item en el historico antes de cambiar su estado
+            RegistrarHistoricoItem(item, eventoActual);
         }
     }
 }

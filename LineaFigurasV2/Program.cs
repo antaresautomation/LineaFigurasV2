@@ -28,65 +28,78 @@ namespace LineaFigurasV2
 
             while (true)
             {
-                Console.WriteLine("Seleccione el tipo de figura a crear:");
+                Console.WriteLine("------- Seleccionar Modo ------");
+                Console.WriteLine("----- 1. Cancelar Figuras -----");
+                Console.WriteLine("----- 2. Crear una Figura -----");
+                int opcionModo = Convert.ToInt32(Console.ReadLine());
 
-                // Mostrar opciones de figuras
-                foreach (Modelos.Figura f in figuras)
-                {
-                    Console.WriteLine($"|{f.ID}| {f.Figura1}");
-                }
+                if (opcionModo == 2) {
 
-                int opcionFigura = Convert.ToInt32(Console.ReadLine());
-                if (!figuras.Any(x => x.ID == opcionFigura))
-                {
-                    Console.WriteLine("Opción inexistente");
+
+                    Console.WriteLine("Seleccione el tipo de figura a crear:");
+
+                    // Mostrar opciones de figuras
+                    foreach (Modelos.Figura f in figuras)
+                    {
+                        Console.WriteLine($"|{f.ID}| {f.Figura1}");
+                    }
+
+                    int opcionFigura = Convert.ToInt32(Console.ReadLine());
+                    if (!figuras.Any(x => x.ID == opcionFigura))
+                    {
+                        Console.WriteLine("Opción inexistente");
+                        Console.ReadKey();
+                        Console.Clear();
+                        continue;
+                    }
+
+                    Console.WriteLine("Ingrese el color:");
+
+                    // Mostrar opciones de colores
+                    foreach (Modelos.Color c in colores)
+                    {
+                        Console.WriteLine($"|{c.ID}| {c.Color1}");
+                    }
+
+                    int opcionColor = Convert.ToInt32(Console.ReadLine());
+
+                    if (!colores.Any(x => x.ID == opcionColor))
+                    {
+                        Console.WriteLine("Opción inexistente");
+                        Console.ReadKey();
+                        Console.Clear();
+                        continue;
+                    }
+
+                    // Asigno en db los valores default e ingresados por el usuario
+                    var nuevoItem = new Modelos.Item
+                    {
+                        ID_Figura = opcionFigura,
+                        ID_Color = opcionColor,
+                        ID_Estado = 0,
+                        IsActive = true,
+                        Origin_Date = DateTime.UtcNow,
+                        Edit_Date = DateTime.UtcNow
+                    };
+
+                    db.Item.Add(nuevoItem);
+                    db.SaveChanges();
+
+                    // Te instancio el receptor con el ID del nuevo item
+
+                    // Instanciame esta
+                    int nuevoItemId = nuevoItem.ID;
+
+                    Console.WriteLine($"Item creado con ID: {nuevoItemId}");
                     Console.ReadKey();
                     Console.Clear();
-                    continue;
+
                 }
+                else if (opcionModo == 1) {
+                    ItemController ItemControl = new ItemController();
 
-                Console.WriteLine("Ingrese el color:");
-
-                // Mostrar opciones de colores
-                foreach (Modelos.Color c in colores)
-                {
-                    Console.WriteLine($"|{c.ID}| {c.Color1}");
+                
                 }
-
-                int opcionColor = Convert.ToInt32(Console.ReadLine());
-
-                if (!colores.Any(x => x.ID == opcionColor))
-                {
-                    Console.WriteLine("Opción inexistente");
-                    Console.ReadKey();
-                    Console.Clear();
-                    continue;
-                }
-
-                // Asigno en db los valores default e ingresados por el usuario
-                var nuevoItem = new Modelos.Item
-                {
-                    ID_Figura = opcionFigura,
-                    ID_Color = opcionColor,
-                    ID_Estado = 0,
-                    IsActive = true,
-                    Origin_Date = DateTime.Now,
-                    Edit_Date = DateTime.Now
-                };
-
-                db.Item.Add(nuevoItem);
-                db.SaveChanges();
-
-                // Te instancio el receptor con el ID del nuevo item
-
-                // Instanciame esta
-                int nuevoItemId = nuevoItem.ID;
-
-                await NamedPipeHelper.EnviarVariableAsync(nuevoItemId);
-
-                Console.WriteLine($"Item creado con ID: {nuevoItemId}");
-                Console.ReadKey();
-                Console.Clear();
             }
         }
 
