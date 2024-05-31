@@ -31,10 +31,14 @@ namespace MaquinaDeEstados
             {
                 List<Modelos.Estacion_Trabajo> Estaciones = db.Estacion_Trabajo.ToList();
 
+                Console.WriteLine("ESTACIONES\n");
+
                 foreach (var item in Estaciones)
                 {
-                    Console.WriteLine(item.ID + "- Estacion: " + item.Nombre);
+                    Console.WriteLine(item.ID + ". Estacion: " + item.Nombre);
                 }
+
+                Console.WriteLine("\nSelecciona la estación requerida:");
 
                 int estacion = int.Parse(Console.ReadLine());
 
@@ -46,6 +50,7 @@ namespace MaquinaDeEstados
                 {
                     Console.WriteLine("Wtf pala");
                 }
+
             }
         }
 
@@ -66,18 +71,24 @@ namespace MaquinaDeEstados
 
                 //imprime la estacion
                 JuguetesConsola consola = new JuguetesConsola();
+                
                 consola.GirarBarrita(1000);
+
                 consola.GenerarEstacion(items.Count,EstacionDyT.Figura,EstacionDyT.Estacion,EstacionDyT.Disponibilidad);
 
-                Console.WriteLine("1.- Avanzar");
-                Console.WriteLine("2.- Siguiente");
-                Console.WriteLine("3.- Descartar");
-                Console.WriteLine("4.- Cambiar Modo");
-                Console.WriteLine("5.- Salir");
-                Console.WriteLine("6.- Actualizar");
+                Console.WriteLine("\nESTADOS: \n");
+
+                Console.WriteLine("1. Avanzar");
+                Console.WriteLine("2. Siguiente");
+                Console.WriteLine("3. Descartar");
+                Console.WriteLine("4. Cambiar Modo");
+                Console.WriteLine("5. Salir");
+                Console.WriteLine("6. Actualizar");
+
+                Console.WriteLine("\nSelecciona el estado requerido:");
 
                 int opcion = int.Parse(Console.ReadLine());
-                
+
                 switch (opcion)
                 {
                     case 1:
@@ -121,14 +132,14 @@ namespace MaquinaDeEstados
                     case 4:
                         Console.Clear();
                         consola.GirarBarrita(1000);
-                        //CambiarModo(id_estacion);
+                        CambiarModo(id_estacion);
+                        Console.Clear();
                         break;
 
                     case 5:
                         Console.Clear();
                         consola.GirarBarrita(1000);
-                        //Salir();
-                        salir = true;
+                        Salir();
                         return;
 
                     case 6:
@@ -136,10 +147,81 @@ namespace MaquinaDeEstados
                         continue;
 
                     default:
+                        Console.Clear();
+                        Console.WriteLine("Opción no válida, intenta de nuevo.");
+                        Thread.Sleep(500);
                         break;
                 }
             }
             
+        }
+
+        private void Salir()
+        {
+            bool salir = true;
+            Console.Clear();
+            Menu();
+        }
+
+        private void CambiarModo(int id_estacion)
+        {
+            Console.Clear();
+            
+            Console.WriteLine("CAMBIAR MODO \n");
+
+            Console.WriteLine("Figuras Disponibles: \n");
+
+            List<Figura> figs = db.Figura.ToList(); // Lista de figuras
+
+            foreach (var figura in figs) // Bucle para cada figura
+            {
+                Console.WriteLine($"{figura.ID}. {figura.Figura1}");
+            }
+
+            int modo = 0;
+
+            bool validInput = false; 
+            
+            // Definir cuando es una opción correcta
+
+            while (!validInput)
+            {
+                Console.WriteLine("\nSelecciona el nuevo modo:");
+
+                string input = Console.ReadLine();
+
+                try
+                {
+                    modo = int.Parse(input);
+
+                    if (figs.Any(f => f.ID == modo))
+                    {
+                        validInput = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Modo no válido, intenta de nuevo.");
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Entrada no válida. Por favor, ingresa un número.");
+                }
+            }
+
+            var estacion = db.Estacion_Trabajo.FirstOrDefault(x => x.ID == id_estacion); // Iguala los ID
+            if (estacion != null)
+            {
+                estacion.Modo_ID_Figura = modo;
+                db.SaveChanges();
+                Console.WriteLine("\nModo cambiado exitosamente.");
+            }
+            else
+            {
+                Console.WriteLine("Error: Estación no encontrada.");
+            }
+            Thread.Sleep(750);
+            Console.Clear();
         }
 
        
