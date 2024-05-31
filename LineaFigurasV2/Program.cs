@@ -50,7 +50,8 @@ namespace LineaFigurasV2
                         ItemController.ListaFiguras(items);
                         int idEspecifico = ItemController.InputVerifier(items);
                         int codigoParaSalir = -2;
-                        if (idEspecifico == codigoParaSalir || idEspecifico == -1)
+                        int codigoDeUsuarioError = -1;
+                        if (idEspecifico == codigoParaSalir || idEspecifico == codigoDeUsuarioError)
                         {
                             Console.Clear();
                             break;
