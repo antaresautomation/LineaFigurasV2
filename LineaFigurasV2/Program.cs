@@ -11,6 +11,7 @@ using Modelos = LibreriaComun.Modelos;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using LibreriaComun.Modelos;
+using System.Runtime.Remoting.Contexts;
 
 namespace LineaFigurasV2
 {
@@ -20,7 +21,6 @@ namespace LineaFigurasV2
 
         static async Task Main(string[] args)
         {
-
             JuguetesConsola JuguetesConsola = new JuguetesConsola();
 
             // Obtiene el catalogo de datos, che fer
@@ -35,9 +35,8 @@ namespace LineaFigurasV2
                 int opcionModo = Convert.ToInt32(Console.ReadLine());
                 Console.Clear();
 
-                if (opcionModo == 2) {
-
-
+                if (opcionModo == 2)
+                {
                     Console.WriteLine("Seleccione el tipo de figura a crear:");
 
                     // Mostrar opciones de figuras
@@ -95,14 +94,33 @@ namespace LineaFigurasV2
                     Console.WriteLine($"Item creado con ID: {nuevoItemId}");
                     Console.ReadKey();
                     Console.Clear();
-
                 }
-                else if (opcionModo == 1) {
+                else if (opcionModo == 1)
+                {
                     List<Item> items = ItemController.ObtenerFilaDeEstacion(1);
-                    ItemController.ListaFiguras(items);
+                    int idEspecifico = ItemController.ListaFiguras(items);
 
+                    var item = db.Item.SingleOrDefault(i => i.ID == idEspecifico);
 
-
+                    if (item != null)
+                    {
+                        ItemController.Cancelar(item);
+                        db.SaveChanges(); // Asegúrate de guardar los cambios en la base de datos
+                        Console.WriteLine($"El item con ID {idEspecifico} ha sido cancelado.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Item no encontrado.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No estuviste el dia que repartieron ojos?");
+                    Thread.Sleep(2000);
+                    Console.WriteLine("Aca van 10 segundos de castigo...");
+                    Thread.Sleep(2000);
+                    JuguetesConsola.GirarBarrita(10000);
+                    Console.Clear();
                 }
             }
         }
