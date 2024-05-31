@@ -173,14 +173,14 @@ namespace LibreriaComun.Clases
                 return double.NaN;
             }
         }
-        public static void AvanzarFigura(int estacionID)   //Obtener Figura que actualmente está en la estacion
+        public static bool AvanzarFigura(int estacionID)   //Obtener Figura que actualmente está en la estacion
         {
             Item item = ItemController.ObtenerItemEstacion(estacionID);
 
             // Comprobar si el item es null (no hay figura en la estación)
             if (item == null)
             {
-                throw new InvalidOperationException($"No hay una figura en la estación con ID {estacionID}.");
+                return false;
             }
 
             //Obtenemos el evento que sigue
@@ -195,6 +195,8 @@ namespace LibreriaComun.Clases
             estacion = ItemController.SetearEstacionDisponible(estacion);
             //registrar historico estacion
             ItemController.RegistrarHistoricoEstacion(estacion);
+
+            return true;
 
         }
 

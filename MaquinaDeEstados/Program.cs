@@ -86,9 +86,17 @@ namespace MaquinaDeEstados
                 switch (opcion)
                 {
                     case 1: //Hacemos avanzar a la figura, se registra el item con el nuevo estado, se guarda el historial, y pasa a estar desocupado
-                        ItemController.AvanzarFigura(id_estacion);
-                        consola.GirarBarrita(10000);
-                        Console.WriteLine("Exito crack, ha avanzado la figura sin problema");
+                        if (ItemController.AvanzarFigura(id_estacion))
+                        {
+                            consola.GirarBarrita(2000);
+                            Console.WriteLine("Exito crack, ha avanzado la figura sin problema");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("No se encuentra ninfuna figura en la estacion Pala nmms, lee bien por favor xd");
+                        };
                         Console.ReadKey();
                         continue;
 
