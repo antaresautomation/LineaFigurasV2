@@ -87,7 +87,7 @@ namespace MaquinaDeEstados
                 {
                     case 1: //Hacemos avanzar a la figura, se registra el item con el nuevo estado, se guarda el historial, y pasa a estar desocupado
                         ItemController.AvanzarFigura(id_estacion);
-                        consola.GirarBarrita(10000);
+                        consola.GirarBarrita(2000);
                         Console.WriteLine("Exito crack, ha avanzado la figura sin problema");
                         Console.ReadKey();
                         continue;
@@ -95,13 +95,8 @@ namespace MaquinaDeEstados
                     case 2:
                         if(ItemController.Siguiente(id_estacion, items))
                         {
-                            consola.GirarBarrita(2000);
+                            consola.GirarBarrita(1000);
                             Console.WriteLine("Exito crack, ha pasado la siguiente figura sin problema");
-                        }
-                        else
-                        {
-                            consola.GirarBarrita(2000);
-                            Console.WriteLine("Te dije que esta ocupado PP.");
                         }
                         Console.ReadKey();
                         continue;
