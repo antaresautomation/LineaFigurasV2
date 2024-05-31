@@ -121,13 +121,13 @@ namespace MaquinaDeEstados
                     case 4:
                         Console.Clear();
                         consola.GirarBarrita(1000);
-                        //CambiarModo(id_estacion);
+                        ItemController.CambiarModo(id_estacion);
                         break;
 
                     case 5:
                         Console.Clear();
-                        consola.GirarBarrita(1000);
-                        //Salir();
+                        consola.GirarBarrita(500);
+                        
                         salir = true;
                         return;
 

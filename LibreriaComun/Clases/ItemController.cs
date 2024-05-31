@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -323,6 +324,67 @@ namespace LibreriaComun.Clases
 
             // Registrar el item en el historico antes de cambiar su estado
             RegistrarHistoricoItem(item, eventoActual);
+        }
+
+        public static void CambiarModo(int id_estacion)
+        {
+            Console.Clear();
+
+            Console.WriteLine("CAMBIAR MODO \n");
+
+            Console.WriteLine("Figuras Disponibles: \n");
+
+            List<Figura> figs = db.Figura.ToList(); // Lista de figuras
+
+            foreach (var figura in figs) // Bucle para cada figura
+            {
+                Console.WriteLine($"{figura.ID}. {figura.Figura1}");
+            }
+
+            int modo = 0;
+
+            bool validInput = false;
+
+            // Definir cuando es una opción correcta
+
+            while (!validInput)
+            {
+                Console.WriteLine("\nSelecciona el nuevo modo:");
+
+                string input = Console.ReadLine();
+
+                try
+                {
+                    modo = int.Parse(input);
+
+                    if (figs.Any(f => f.ID == modo))
+                    {
+                        validInput = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Modo no válido, intenta de nuevo.");
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Entrada no válida. Por favor, ingresa un número.");
+                }
+            }
+
+            var estacion = db.Estacion_Trabajo.FirstOrDefault(x => x.ID == id_estacion); // Iguala los ID
+            if (estacion != null)
+            {
+                estacion.Modo_ID_Figura = modo;
+                db.SaveChanges();
+                Console.WriteLine("\nModo cambiado exitosamente.");
+            }
+            else
+            {
+                Console.WriteLine("Error: Estación no encontrada.");
+            }
+            Thread.Sleep(750);
+            Console.Clear();
         }
     }
 }
