@@ -35,11 +35,17 @@ namespace LibreriaComun.Clases
         }
 
         // Verifica disponibilidad de una estacion
-        public static bool VerificarDisponibilidadYModo(int estacionSiguiente, int idFigura)
+        public static bool VerificarModo(int estacionSiguiente, int idFigura)
+        {
+
+            Estacion_Trabajo estacion = ObtenerEstacion(estacionSiguiente);
+            return estacion != null && estacion.Modo_ID_Figura == idFigura;
+        }
+        public static bool VerificarDisponibilidad(int estacionSiguiente, int idFigura)
         {
             
             Estacion_Trabajo estacion = ObtenerEstacion(estacionSiguiente);
-            return estacion != null && estacion.ID_Estado_Trabajo == 1 && estacion.Modo_ID_Figura == idFigura;
+            return estacion != null && estacion.ID_Estado_Trabajo == 1;
         }
 
         //Obtiene ka Disponibilidad y el modo de la estacion
@@ -207,30 +213,40 @@ namespace LibreriaComun.Clases
 
         static public bool Siguiente(int EstacionID,List<Item> items)
         {
-
             int index;
             Estacion_Trabajo estacion = ObtenerEstacion(EstacionID);
             do
             {
                 index = ListaMenu(estacion, items);
             } while (index == -1);
-            if (index == 0) return false;
+            if (index == -2) return false;
             Item item = items[index];
-            Evento evento = ObtenerEvento(item);
-            if (VerificarDisponibilidadYModo(EstacionID,item.ID_Figura))
+
+            if (!VerificarDisponibilidad(EstacionID, item.ID_Figura))
             {
-                RegistrarHistoricoEstacion(SetearEstacionOcupada(estacion));
-                CambiarEstadoItem(item, ObtenerEstadoSiguiente(item));
-                RegistrarHistoricoItem(item, evento);
-                return true;
-            }
+                Console.WriteLine("Estacion de Trabajo no disponible Estado:" +estacion.Estado_Estacion_Trabajo.Estado);
                 return false;
+            }
+            if (!VerificarModo(EstacionID, item.ID_Figura))
+            {
+                Console.WriteLine("Modo Erroneo necesita Modo: "+item.Figura.Figura1 + "Modo Actual: "+estacion.Figura.Figura1 );
+                return false;
+            }
+            Estacion_Trabajo Upgrade_Estacion = SetearEstacionOcupada(estacion);
+            Evento Next_Evento = ObtenerEventoSiguiente(item);
+            int Next_Estado = Next_Evento.Estado_Final;
+            Item Update_Item = CambiarEstadoItem(item, Next_Estado);
+            RegistrarHistoricoItem(Update_Item,Next_Evento);
+            RegistrarHistoricoEstacion(Upgrade_Estacion);
+
+            return true;
         }
         static public int ListaMenu(Estacion_Trabajo estacion, List<Item> items)
         {
             Console.Clear();
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("     Menu Estacion de Trabajo "+estacion.Nombre);
+            Console.WriteLine("           Modo Actual: " + estacion.Figura.Figura1);
             Console.WriteLine("         Lista de Figuras en Espera");
             Console.WriteLine("--------------------------------------------");
             foreach (Item i in items)
@@ -241,7 +257,7 @@ namespace LibreriaComun.Clases
             string input = Console.ReadLine();
             if (int.TryParse(input, out int id))
             {
-                if (id == 0) return 0;
+                if (id == 0) return -2;
                 int index = items.FindIndex(item => item.ID == id);
                 if (index != -1)  return index;
                 else return -1;
