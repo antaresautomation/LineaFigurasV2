@@ -76,10 +76,10 @@ namespace MaquinaDeEstados
                 Console.WriteLine("5.- Salir");
                 Console.WriteLine("6.- Actualizar");
 
-                int opcion = int.Parse(Console.ReadLine());
-                
-                switch (opcion)
+                if (int.TryParse(Console.ReadLine(), out int opcion))
                 {
+                    switch (opcion)
+                    {
                     case 1:
                         if (ItemController.AvanzarFigura(id_estacion))
                         {
@@ -134,15 +134,18 @@ namespace MaquinaDeEstados
                     case 6:
                         consola.GirarBarrita(500);
                         continue;
-
-                    default:
                         break;
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Entrada no válida, por favor ingrese un número");
+                    Console.ReadKey();
                 }
             }
-            
         }
 
-       
 
         private static void StartItem(int id)
         {
