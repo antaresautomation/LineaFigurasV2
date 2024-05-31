@@ -218,10 +218,13 @@ namespace LibreriaComun.Clases
                 Console.WriteLine("Modo Erroneo necesita Modo: "+item.Figura.Figura1 + "Modo Actual: "+estacion.Figura.Figura1 );
                 return false;
             }
+            Estacion_Trabajo Upgrade_Estacion = SetearEstacionOcupada(estacion);
+            Evento Next_Evento = ObtenerEventoSiguiente(item);
+            int Next_Estado = Next_Evento.Estado_Final;
+            Item Update_Item = CambiarEstadoItem(item, Next_Estado);
+            RegistrarHistoricoItem(Update_Item,Next_Evento);
+            RegistrarHistoricoEstacion(Upgrade_Estacion);
 
-
-            RegistrarHistoricoEstacion(SetearEstacionOcupada(estacion));
-            RegistrarHistoricoItem(CambiarEstadoItem(item, ObtenerEstadoSiguiente(item)), ObtenerEvento(item));
             return true;
         }
         static public int ListaMenu(Estacion_Trabajo estacion, List<Item> items)
