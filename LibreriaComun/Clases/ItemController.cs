@@ -226,11 +226,10 @@ namespace LibreriaComun.Clases
             }
                 return false;
         }
-        static public int ListaMenu(Estacion_Trabajo estacion, List<Item> items)
+        static public int ListaMenu(List<Item> items)
         {
             Console.Clear();
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("     Menu Estacion de Trabajo "+estacion.Nombre);
             Console.WriteLine("         Lista de Figuras en Espera");
             Console.WriteLine("--------------------------------------------");
             foreach (Item i in items)
@@ -244,6 +243,21 @@ namespace LibreriaComun.Clases
                 if (id == 0) return 0;
                 int index = items.FindIndex(item => item.ID == id);
                 if (index != -1)  return index;
+                else return -1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        static public int InputVerifier(string input, List<Item> items)
+        {
+            if (int.TryParse(input, out int id))
+            {
+                if (id == 0) return 0;
+                int index = items.FindIndex(item => item.ID == id);
+                if (index != -1) return index;
                 else return -1;
             }
             else

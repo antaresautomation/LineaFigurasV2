@@ -33,6 +33,7 @@ namespace LineaFigurasV2
                 Console.WriteLine("----- 1. Cancelar Figuras -----");
                 Console.WriteLine("----- 2. Crear una Figura -----");
                 int opcionModo = Convert.ToInt32(Console.ReadLine());
+                Console.Clear();
 
                 if (opcionModo == 2) {
 
@@ -102,6 +103,8 @@ namespace LineaFigurasV2
                     {
                         Console.WriteLine($"|{i.ID}|  {i.Figura.Figura1} : {i.Color.Color1} ");
                     }
+                    Console.WriteLine("Elija el ID de la figura por cancelar");
+                    int Fig = Convert.ToInt32(Console.ReadLine());
 
 
                 }
