@@ -20,12 +20,6 @@ namespace MaquinaDeEstados
 
         static async Task Main(string[] args)
         {
-            //NamedPipeHelper.VariableChanged += StartItem;
-
-            //int id = await NamedPipeHelper.RecibirVariableAsync();
-            
-            //await NamedPipeHelper.EscucharCambiosAsync();
-
             Program p = new Program();
             p.Menu();
             Console.ReadKey();
@@ -57,7 +51,7 @@ namespace MaquinaDeEstados
 
         public void Estacion(int id_estacion)
         {
-            //Define cuando salir del bucle para esta estacn
+            //Define cuando salir del bucle para esta estacion
             bool salir = false;
 
             while (!salir)
@@ -87,7 +81,7 @@ namespace MaquinaDeEstados
                 {
                     case 1: //Hacemos avanzar a la figura, se registra el item con el nuevo estado, se guarda el historial, y pasa a estar desocupado
                         ItemController.AvanzarFigura(id_estacion);
-                        consola.GirarBarrita(10000);
+                        consola.GirarBarrita(3000);
                         Console.WriteLine("Exito crack, ha avanzado la figura sin problema");
                         Console.ReadKey();
                         continue;
@@ -111,13 +105,13 @@ namespace MaquinaDeEstados
 
                     case 4:
                         Console.Clear();
-                        consola.GirarBarrita(500);
+                        consola.GirarBarrita(1000);
                         //CambiarModo(id_estacion);
                         break;
 
                     case 5:
                         Console.Clear();
-                        consola.GirarBarrita(500);
+                        consola.GirarBarrita(1000);
                         //Salir();
                         salir = true;
                         return;
@@ -185,9 +179,9 @@ namespace MaquinaDeEstados
                                 ID_Item = item.ID,
                                 ID_Evento = Evento.ID,
                                 IsActive = true,
-                                Edit_Date = DateTime.Now,
-                                Origin_Date = DateTime.Now,
-                                Tiempo = DateTime.Now.TimeOfDay
+                                Edit_Date = DateTime.UtcNow,
+                                Origin_Date = DateTime.UtcNow,
+                                Tiempo = DateTime.UtcNow.TimeOfDay
                             };
 
                             Modelos.Historico_Estacion_Trabajo historicoEstacion = new Historico_Estacion_Trabajo
@@ -196,9 +190,9 @@ namespace MaquinaDeEstados
                                 ID_Estado_Estacion_Trabajo = Estacion.ID_Estado_Trabajo,
                                 ID_Modo = Estacion.Modo_ID_Figura,
                                 IsActive = true,
-                                Origin_Date = DateTime.Now,
-                                Edit_Date = DateTime.Now,
-                                Tiempo_Estacion_Trabajo = DateTime.Now.TimeOfDay
+                                Origin_Date = DateTime.UtcNow,
+                                Edit_Date = DateTime.UtcNow,
+                                Tiempo_Estacion_Trabajo = DateTime.UtcNow.TimeOfDay
                             };
 
                             db.Historico.Add(historicoItem);
@@ -231,9 +225,9 @@ namespace MaquinaDeEstados
                                 ID_Item = item.ID,
                                 ID_Evento = Evento.ID,
                                 IsActive = true,
-                                Edit_Date = DateTime.Now,
-                                Origin_Date = DateTime.Now,
-                                Tiempo = DateTime.Now.TimeOfDay
+                                Edit_Date = DateTime.UtcNow,
+                                Origin_Date = DateTime.UtcNow,
+                                Tiempo = DateTime.UtcNow.TimeOfDay
 
                             };
 
@@ -244,9 +238,9 @@ namespace MaquinaDeEstados
                                 ID_Estado_Estacion_Trabajo = Estacion.ID_Estado_Trabajo,
                                 ID_Modo = Estacion.Modo_ID_Figura,
                                 IsActive = true,
-                                Origin_Date = DateTime.Now,
-                                Edit_Date = DateTime.Now,
-                                Tiempo_Estacion_Trabajo = DateTime.Now.TimeOfDay
+                                Origin_Date = DateTime.UtcNow,
+                                Edit_Date = DateTime.UtcNow,
+                                Tiempo_Estacion_Trabajo = DateTime.UtcNow.TimeOfDay
                             };
 
                             db.Historico_Estacion_Trabajo.Add(historicoEstacion);

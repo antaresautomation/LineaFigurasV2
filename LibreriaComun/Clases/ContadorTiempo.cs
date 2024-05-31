@@ -23,7 +23,7 @@ namespace LibreriaComun.Clases
 
         public void Iniciar()
         {
-            inicio = DateTime.Now;
+            inicio = DateTime.UtcNow;
             hilo = new Thread(Contar);
             hilo.IsBackground = true;
             hilo.Start();
@@ -44,7 +44,7 @@ namespace LibreriaComun.Clases
                 Thread.Sleep(intervalo); // Esperar el intervalo de tiempo
 
                 // Calcular el tiempo transcurrido
-                TimeSpan tiempoTranscurrido = DateTime.Now - inicio;
+                TimeSpan tiempoTranscurrido = DateTime.UtcNow - inicio;
 
                 // Disparar el evento de tiempo transcurrido
                 TiempoTranscurrido?.Invoke(this, tiempoTranscurrido);
