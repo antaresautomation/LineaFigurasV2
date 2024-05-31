@@ -18,7 +18,7 @@ namespace MaquinaDeEstados
     {
         static Modelos.DBLPFEntities db = DataContext.ObtenerInstancia();
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             Program p = new Program();
             p.Menu();
@@ -74,6 +74,7 @@ namespace MaquinaDeEstados
                 Console.WriteLine("3.- Descartar");
                 Console.WriteLine("4.- Cambiar Modo");
                 Console.WriteLine("5.- Salir");
+                Console.WriteLine("6.- Actualizar");
 
                 int opcion = int.Parse(Console.ReadLine());
                 
@@ -84,17 +85,12 @@ namespace MaquinaDeEstados
                         {
                             consola.GirarBarrita(2000);
                             Console.WriteLine("Exito crack, ha avanzado la figura sin problema");
-                            Console.ReadKey();
                         }
                         else
                         {
                             Console.Clear();
                             Console.WriteLine("No se encuentra ninguna figura en la estacion Pala nmms estas ciego?");
                         };
-                        Console.ReadKey();
-                        ItemController.AvanzarFigura(id_estacion);
-                        consola.GirarBarrita(2000);
-                        Console.WriteLine("Exito crack, ha avanzado la figura sin problema");
                         Console.ReadKey();
                         continue;
 
@@ -109,6 +105,17 @@ namespace MaquinaDeEstados
 
                     case 3:
 
+                        if (ItemController.Scrap(id_estacion))
+                        {
+                            consola.GirarBarrita(2000);
+                            Console.WriteLine("Exito crack, haz descartado la figura");
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("No se encuentra ninguna figura en la estacion Pala nmms estas ciego?");
+                        };
+                        Console.ReadKey();
                         continue;
 
                     case 4:
@@ -123,6 +130,10 @@ namespace MaquinaDeEstados
                         //Salir();
                         salir = true;
                         return;
+
+                    case 6:
+                        consola.GirarBarrita(500);
+                        continue;
 
                     default:
                         break;
