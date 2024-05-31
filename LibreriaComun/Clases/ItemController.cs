@@ -272,25 +272,15 @@ namespace LibreriaComun.Clases
         {
             Console.Clear();
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("-------------Lista de Figuras---------------");
+            Console.WriteLine("-----------> Lista de Figuras <-------------");
             Console.WriteLine("--------------------------------------------");
             foreach (Item i in items)
             {
                 Console.WriteLine($"|{i.ID}|  {i.Figura.Figura1} : {i.Color.Color1} ");
             }
-            Console.WriteLine("Ingrese ID de Figura Seleccionada o ingrese 0 para salir: ");
-            string input = Console.ReadLine();
-            if (int.TryParse(input, out int id))
-            {
-                if (id == 0) return -2;
-                int index = items.FindIndex(item => item.ID == id);
-                if (index != -1) return index;
-                else return -1;
-            }
-            else
-            {
-                return -1;
-            }
+            Console.WriteLine("Ingrese ID de Figura Seleccionada:");
+            int input = int.Parse(Console.ReadLine());
+            return input;
         }
 
         static public int InputVerifier(string input, List<Item> items)
@@ -329,9 +319,8 @@ namespace LibreriaComun.Clases
             RegistrarHistoricoEstacion(SetearEstacionDisponible(estacion));
         }
 
-        static public void Cancelar(int EstacionID)
+        static public void Cancelar(Item item)
         {
-            Item item = ObtenerItemEstacion(EstacionID);
 
             Evento eventoActual = ObtenerEvento(item);
 
@@ -344,4 +333,3 @@ namespace LibreriaComun.Clases
         }
     }
 }
-
