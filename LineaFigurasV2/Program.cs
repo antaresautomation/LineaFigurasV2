@@ -99,12 +99,8 @@ namespace LineaFigurasV2
                 }
                 else if (opcionModo == 1) {
                     List<Item> items = ItemController.ObtenerFilaDeEstacion(1);
-                    foreach (Item i in items)
-                    {
-                        Console.WriteLine($"|{i.ID}|  {i.Figura.Figura1} : {i.Color.Color1} ");
-                    }
-                    Console.WriteLine("Elija el ID de la figura por cancelar");
-                    int Fig = Convert.ToInt32(Console.ReadLine());
+                    ItemController.ListaFiguras(items);
+
 
 
                 }

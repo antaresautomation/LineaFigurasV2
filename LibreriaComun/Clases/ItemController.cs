@@ -241,7 +241,7 @@ namespace LibreriaComun.Clases
 
             return true;
         }
-        static public int ListaMenu(List<Item> items)
+        static public int ListaMenu(Estacion_Trabajo estacion, List<Item> items)
         {
             Console.Clear();
             Console.WriteLine("--------------------------------------------");
@@ -260,6 +260,31 @@ namespace LibreriaComun.Clases
                 if (id == 0) return -2;
                 int index = items.FindIndex(item => item.ID == id);
                 if (index != -1)  return index;
+                else return -1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        static public int ListaFiguras(List<Item> items)
+        {
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("-------------Lista de Figuras---------------");
+            Console.WriteLine("--------------------------------------------");
+            foreach (Item i in items)
+            {
+                Console.WriteLine($"|{i.ID}|  {i.Figura.Figura1} : {i.Color.Color1} ");
+            }
+            Console.WriteLine("Ingrese ID de Figura Seleccionada o ingrese 0 para salir: ");
+            string input = Console.ReadLine();
+            if (int.TryParse(input, out int id))
+            {
+                if (id == 0) return -2;
+                int index = items.FindIndex(item => item.ID == id);
+                if (index != -1) return index;
                 else return -1;
             }
             else
