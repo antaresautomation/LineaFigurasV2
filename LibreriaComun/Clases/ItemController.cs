@@ -245,32 +245,16 @@ namespace LibreriaComun.Clases
         {
             Console.Clear();
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("     Menu Estacion de Trabajo "+estacion.Nombre);
-            Console.WriteLine("           Modo Actual: " + estacion.Figura.Figura1);
-            Console.WriteLine("         Lista de Figuras en Espera");
+            Console.WriteLine("       Menu Estacion de Trabajo "+estacion.Nombre);
+            Console.WriteLine("             Modo Actual: " + estacion.Figura.Figura1);
             Console.WriteLine("--------------------------------------------");
-            foreach (Item i in items)
-            {
-                Console.WriteLine($"|{i.ID}|  {i.Figura.Figura1} : {i.Color.Color1} ");
-            }
-            Console.WriteLine("Ingrese ID de Figura Seleccionada o ingrese 0 para salir: ");
-            string input = Console.ReadLine();
-            if (int.TryParse(input, out int id))
-            {
-                if (id == 0) return -2;
-                int index = items.FindIndex(item => item.ID == id);
-                if (index != -1)  return index;
-                else return -1;
-            }
-            else
-            {
-                return -1;
-            }
+
+            ListaFiguras(items);
+            return InputVerifier(items);
         }
 
-        static public int ListaFiguras(List<Item> items)
+        static public void ListaFiguras(List<Item> items)
         {
-            Console.Clear();
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("-----------> Lista de Figuras <-------------");
             Console.WriteLine("--------------------------------------------");
@@ -278,16 +262,15 @@ namespace LibreriaComun.Clases
             {
                 Console.WriteLine($"|{i.ID}|  {i.Figura.Figura1} : {i.Color.Color1} ");
             }
-            Console.WriteLine("Ingrese ID de Figura Seleccionada:");
-            int input = int.Parse(Console.ReadLine());
-            return input;
+            Console.WriteLine("Presione 0 para salir o Ingrese ID de Figura Seleccionada:");
         }
 
-        static public int InputVerifier(string input, List<Item> items)
+        static public int InputVerifier(List<Item> items)
         {
+            string input = Console.ReadLine();
             if (int.TryParse(input, out int id))
             {
-                if (id == 0) return 0;
+                if (id == 0) return -2;
                 int index = items.FindIndex(item => item.ID == id);
                 if (index != -1) return index;
                 else return -1;

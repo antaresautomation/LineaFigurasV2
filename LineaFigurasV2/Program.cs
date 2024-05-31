@@ -98,7 +98,8 @@ namespace LineaFigurasV2
                 else if (opcionModo == 1)
                 {
                     List<Item> items = ItemController.ObtenerFilaDeEstacion(1);
-                    int idEspecifico = ItemController.ListaFiguras(items);
+                    ItemController.ListaFiguras(items);
+                    int idEspecifico = ItemController.InputVerifier(items);
 
                     var item = db.Item.SingleOrDefault(i => i.ID == idEspecifico);
 
