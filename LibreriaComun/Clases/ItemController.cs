@@ -181,6 +181,13 @@ namespace LibreriaComun.Clases
         public static void AvanzarFigura(int estacionID)   //Obtener Figura que actualmente está en la estacion
         {
             Item item = ItemController.ObtenerItemEstacion(estacionID);
+
+            // Comprobar si el item es null (no hay figura en la estación)
+            if (item == null)
+            {
+                throw new InvalidOperationException($"No hay una figura en la estación con ID {estacionID}.");
+            }
+
             //Obtenemos el evento que sigue
             Evento evento = ItemController.ObtenerEventoSiguiente(item);
             //Pasamos al siguiente estado el item
