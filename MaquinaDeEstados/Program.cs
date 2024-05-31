@@ -108,7 +108,8 @@ namespace MaquinaDeEstados
                         continue;
 
                     case 3:
-                        break;
+
+                        continue;
 
                     case 4:
                         Console.Clear();

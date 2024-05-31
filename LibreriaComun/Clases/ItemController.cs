@@ -287,7 +287,7 @@ namespace LibreriaComun.Clases
         {
             if (int.TryParse(input, out int id))
             {
-                if (id == 0) return 0;
+                if (id == 0) return -2;
                 int index = items.FindIndex(item => item.ID == id);
                 if (index != -1) return index;
                 else return -1;
