@@ -74,6 +74,7 @@ namespace MaquinaDeEstados
                 Console.WriteLine("3.- Descartar");
                 Console.WriteLine("4.- Cambiar Modo");
                 Console.WriteLine("5.- Salir");
+                Console.WriteLine("6.- Actualizar");
 
                 int opcion = int.Parse(Console.ReadLine());
                 
@@ -84,7 +85,6 @@ namespace MaquinaDeEstados
                         {
                             consola.GirarBarrita(2000);
                             Console.WriteLine("Exito crack, ha avanzado la figura sin problema");
-                            Console.ReadKey();
                         }
                         else
                         {
@@ -109,7 +109,6 @@ namespace MaquinaDeEstados
                         {
                             consola.GirarBarrita(2000);
                             Console.WriteLine("Exito crack, haz descartado la figura");
-                            Console.ReadKey();
                         }
                         else
                         {
@@ -131,6 +130,10 @@ namespace MaquinaDeEstados
                         //Salir();
                         salir = true;
                         return;
+
+                    case 6:
+                        consola.GirarBarrita(500);
+                        continue;
 
                     default:
                         break;
