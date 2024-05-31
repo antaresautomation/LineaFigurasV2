@@ -32,7 +32,10 @@ namespace LineaFigurasV2
                 Console.WriteLine("------- Seleccionar Modo ------");
                 Console.WriteLine("----- 1. Cancelar Figuras -----");
                 Console.WriteLine("----- 2. Crear una Figura -----");
-                int opcionModo = Convert.ToInt32(Console.ReadLine());
+                string opcionuser = Console.ReadLine();
+                int.TryParse(opcionuser, out int opcionModo);
+
+
                 Console.Clear();
 
                 if (opcionModo == 2)
@@ -95,12 +98,13 @@ namespace LineaFigurasV2
                     Console.ReadKey();
                     Console.Clear();
                 }
+                
                 else if (opcionModo == 1)
                 {
                     List<Item> items = ItemController.ObtenerFilaDeEstacion(1);
                     ItemController.ListaFiguras(items);
                     int idEspecifico = ItemController.InputVerifier(items);
-
+                    
                     var item = db.Item.SingleOrDefault(i => i.ID == idEspecifico);
 
                     if (item != null)
