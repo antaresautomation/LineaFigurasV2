@@ -308,11 +308,16 @@ namespace LibreriaComun.Clases
             }
         }
 
-        static public void Scrap(int EstacionID)
+        static public bool Scrap(int EstacionID)
         {
             Estacion_Trabajo estacion = ObtenerEstacion(EstacionID);
 
             Item item = ObtenerItemEstacion(EstacionID);
+
+            if (item == null) { 
+
+                return false;
+            } 
 
             // No uso la funcion de ObtenerEvento porque no jala con el estado final 99
             Evento eventoActual = ObtenerEventoScrap(item);
@@ -327,6 +332,8 @@ namespace LibreriaComun.Clases
             // Seteo la estacion como disponible
             // Registro el cambio de estado en el historico
             RegistrarHistoricoEstacion(SetearEstacionDisponible(estacion));
+
+            return true;
         }
 
         static public void Cancelar(int EstacionID)

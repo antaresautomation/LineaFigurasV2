@@ -18,7 +18,7 @@ namespace MaquinaDeEstados
     {
         static Modelos.DBLPFEntities db = DataContext.ObtenerInstancia();
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             Program p = new Program();
             p.Menu();
@@ -92,10 +92,6 @@ namespace MaquinaDeEstados
                             Console.WriteLine("No se encuentra ninguna figura en la estacion Pala nmms estas ciego?");
                         };
                         Console.ReadKey();
-                        ItemController.AvanzarFigura(id_estacion);
-                        consola.GirarBarrita(2000);
-                        Console.WriteLine("Exito crack, ha avanzado la figura sin problema");
-                        Console.ReadKey();
                         continue;
 
                     case 2:
@@ -108,7 +104,20 @@ namespace MaquinaDeEstados
                         continue;
 
                     case 3:
-                        break;
+
+                        if (ItemController.Scrap(id_estacion))
+                        {
+                            consola.GirarBarrita(2000);
+                            Console.WriteLine("Exito crack, haz descartado la figura");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("No se encuentra ninguna figura en la estacion Pala nmms estas ciego?");
+                        };
+                        Console.ReadKey();
+                        continue;
 
                     case 4:
                         Console.Clear();
