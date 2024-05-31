@@ -32,10 +32,7 @@ namespace LineaFigurasV2
                 Console.WriteLine("------- Seleccionar Modo ------");
                 Console.WriteLine("----- 1. Cancelar Figuras -----");
                 Console.WriteLine("----- 2. Crear una Figura -----");
-                Console.WriteLine("----- 3. Salir ----------------");
-                string opcionuser = Console.ReadLine();
-                int.TryParse(opcionuser, out int opcionModo);
-
+                int opcionModo = Convert.ToInt32(Console.ReadLine());
                 Console.Clear();
 
                 switch (opcionModo)
@@ -52,7 +49,77 @@ namespace LineaFigurasV2
                         Console.WriteLine("Opción no válida.");
                         Console.ReadKey();
                         Console.Clear();
-                        break;
+                        continue;
+                    }
+
+                    Console.WriteLine("Ingrese el color:");
+
+                    // Mostrar opciones de colores
+                    foreach (Modelos.Color c in colores)
+                    {
+                        Console.WriteLine($"|{c.ID}| {c.Color1}");
+                    }
+
+                    int opcionColor = Convert.ToInt32(Console.ReadLine());
+
+                    if (!colores.Any(x => x.ID == opcionColor))
+                    {
+                        Console.WriteLine("Opción inexistente");
+                        Console.ReadKey();
+                        Console.Clear();
+                        continue;
+                    }
+
+                    // Asigno en db los valores default e ingresados por el usuario
+                    var nuevoItem = new Modelos.Item
+                    {
+                        ID_Figura = opcionFigura,
+                        ID_Color = opcionColor,
+                        ID_Estado = 0,
+                        IsActive = true,
+                        Origin_Date = DateTime.UtcNow,
+                        Edit_Date = DateTime.UtcNow
+                    };
+
+                    db.Item.Add(nuevoItem);
+                    db.SaveChanges();
+
+                    // Te instancio el receptor con el ID del nuevo item
+
+                    // Instanciame esta
+                    int nuevoItemId = nuevoItem.ID;
+
+                    Console.WriteLine($"Item creado con ID: {nuevoItemId}");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+                else if (opcionModo == 1)
+                {
+                    List<Item> items = ItemController.ObtenerFilaDeEstacion(1);
+                    ItemController.ListaFiguras(items);
+                    int idEspecifico = ItemController.InputVerifier(items);
+
+                    var item = db.Item.SingleOrDefault(i => i.ID == idEspecifico);
+
+                    if (item != null)
+                    {
+                        ItemController.Cancelar(item);
+                        db.SaveChanges(); // Asegúrate de guardar los cambios en la base de datos
+                        Console.WriteLine($"El item con ID {idEspecifico} ha sido cancelado.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Item no encontrado.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No estuviste el dia que repartieron ojos?");
+                    Thread.Sleep(2000);
+                    Console.WriteLine("Aca van 10 segundos de castigo...");
+                    Thread.Sleep(2000);
+                    JuguetesConsola.GirarBarrita(10000);
+                    Console.Clear();
                 }
             }
         }

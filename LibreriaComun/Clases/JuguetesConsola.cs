@@ -14,7 +14,6 @@ namespace LibreriaComun.Clases
         {
             counter = 0;
         }
-
         public void GirarBarrita(int milliseconds)
         {
             int totalTime = milliseconds;
@@ -43,21 +42,16 @@ namespace LibreriaComun.Clases
 
         public void GenerarEstacion(int number, string shape, string station, bool isAvailable)
         {
-            Console.SetCursorPosition(0, 0);
+            int columnWidth = 24;
 
-            int maxWidth = Math.Max(
-                Math.Max($"Tipo de estación | {station}".Length, $"Disponibilidad   | {(isAvailable ? "Disponible" : "No disponible")}".Length),
-                Math.Max($"Figura           | {shape}".Length, $"Queue  | {number}".Length)
-            );
-
-            string row = $"+-{new string('-', maxWidth)}-+";
+            string row = "+-----------------------------+";
 
             Console.WriteLine(row);
-            Console.WriteLine($"| Tipo de estación | {station.PadRight(maxWidth - 19)} |");
+            Console.WriteLine("| Tipo de estación | " + station.PadRight(columnWidth - 16) + "|");
             Console.WriteLine(row);
-            Console.WriteLine($"| Disponibilidad   | {(isAvailable ? "Disponible" : "No disponible").PadRight(maxWidth - 19)} |");
+            Console.WriteLine("| Disponibilidad   | " + (isAvailable ? "Disponible" : "No disponible").PadRight(columnWidth - 16) + "|");
             Console.WriteLine(row);
-            Console.WriteLine($"| Figura           | {shape.PadRight(maxWidth - 19)} |");
+            Console.WriteLine("| Figura           | " + (shape).PadRight(columnWidth - 16) + "|");
             Console.WriteLine(row);
 
             switch (shape.ToLower())
@@ -66,18 +60,16 @@ namespace LibreriaComun.Clases
                     for (int i = 0; i < 5; i++)
                     {
                         Console.Write("| ");
-                        Console.WriteLine(new string('*', 10).PadRight(maxWidth) + " |");
+                        Console.WriteLine(new string('*', 5 * 2).PadRight(columnWidth - 1) + "|");
                     }
                     break;
-
                 case "rectangulo":
                     for (int i = 0; i < 4; i++)
                     {
                         Console.Write("| ");
-                        Console.WriteLine(new string('*', 14).PadRight(maxWidth) + " |");
+                        Console.WriteLine(new string('*', 7 * 2).PadRight(columnWidth - 1) + "|");
                     }
                     break;
-
                 case "circulo":
                     double radius = 5;
                     double thickness = 0.4;
@@ -97,39 +89,36 @@ namespace LibreriaComun.Clases
                                 line += " ";
                             }
                         }
-                        Console.Write("| " + line.PadRight(maxWidth) + " |");
+                        Console.Write("| " + line.PadRight(columnWidth - 1) + "|");
                         Console.WriteLine();
                     }
                     break;
-
                 case "triangulo":
                     int height = 5;
                     for (int i = 1; i <= height; i++)
                     {
                         Console.Write("| ");
                         string line = new string(' ', height - i) + new string('*', i * 2);
-                        Console.WriteLine(line.PadRight(maxWidth) + " |");
+                        Console.WriteLine(line.PadRight(columnWidth - 1) + "|");
                     }
                     break;
-
                 case "vacio":
                     // No dibujar nada
                     break;
-
                 default:
-                    Console.WriteLine("| " + shape.PadRight(maxWidth) + " |");
+                    Console.WriteLine("| " + shape.PadRight(columnWidth - 1) + "|");
                     break;
             }
 
             Console.WriteLine(row);
-            Console.WriteLine($"| Queue            | {number.ToString().PadRight(maxWidth - 19)} |");
+            Console.WriteLine("| Queue  | " + number.ToString().PadRight(columnWidth - 10) + "|");
             Console.WriteLine(row);
         }
 
-
         public void MostrarProgreso(int milliseconds, int totalItems)
         {
-            int totalTime = milliseconds;
+            
+            int totalTime = milliseconds; // ??????????
             int interval = totalTime / totalItems;
             int progress = 0;
 
